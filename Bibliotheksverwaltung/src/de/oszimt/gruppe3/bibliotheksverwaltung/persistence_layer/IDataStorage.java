@@ -1,4 +1,4 @@
-package de.oszimt.gruppe3.bibliotheksverwaltung.data_storage;
+package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package de.oszimt.gruppe3.bibliotheksverwaltung.user_interface;
+package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
 /**
  * 
