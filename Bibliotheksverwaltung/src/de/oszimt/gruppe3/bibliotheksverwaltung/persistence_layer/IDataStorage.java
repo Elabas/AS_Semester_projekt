@@ -28,5 +28,8 @@ public interface IDataStorage {
 	public Loan readLoan(String isbn, int costumerID) ;
 	public List<Loan> getLoansByCostumer(Costumer costumer) ;
 	public List<Loan> getLoansByBook(Book book) ;
+	public int getBookCount() ;
+	public int getCostumerCount() ;
+	public int getLoanCount() ;
 	
 }

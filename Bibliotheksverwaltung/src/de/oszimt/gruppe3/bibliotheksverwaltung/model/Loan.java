@@ -1,5 +1,6 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @version 1.0
  * 
  */
-public class Loan {
+public class Loan implements Serializable {
 
 	private int loanID ;
 	private Book book;

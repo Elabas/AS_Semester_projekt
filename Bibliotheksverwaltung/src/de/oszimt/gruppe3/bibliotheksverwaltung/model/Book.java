@@ -1,12 +1,15 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.model;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * 
  * @author Tim Müller
  * @version 1.0
  *
  */
-public class Book {
+public class Book implements Serializable {
 
 	private String isbn;
 	private String title;
@@ -51,5 +54,4 @@ public class Book {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
 }

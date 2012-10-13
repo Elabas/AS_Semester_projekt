@@ -1,16 +1,19 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.model;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * 
  * @author Tim Müller
  * @version 1.0
  *
  */
-public class Costumer {
+public class Costumer implements Serializable {
 
-	private String name;
-	private String surname;
 	private int customerID;
+	private String name;
+	private String surname;	
 	private String address;
 
 	public Costumer(String name, String surname, int customerID, String address) {
