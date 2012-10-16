@@ -1,6 +1,12 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
@@ -8,6 +14,16 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 public class XML implements IDataStorage {
 
+	public XML(File f) throws JDOMException, IOException{
+		this.openFile(f);
+	}
+	
+	private Document openFile(File f) throws JDOMException, IOException{
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(f);
+		return doc;
+	}
+	
 	@Override
 	public boolean createBook(Book book) {
 		// TODO Auto-generated method stub
