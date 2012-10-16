@@ -10,6 +10,8 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
  */
 public class TUI  {
 
+	
+	//woho es funtzt *-*
 	private IBusinessLogic logic ;
 
 	public TUI(IBusinessLogic logic) {
