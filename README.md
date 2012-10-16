@@ -1,0 +1,1 @@
+Das ist ein github repository für eine Semester Projekt
