@@ -31,5 +31,7 @@ public interface IDataStorage {
 	public int getBookCount() ;
 	public int getCustomerCount() ;
 	public int getLoanCount() ;
+	public void openDataStorage() ;
+	public void closeDataStorage() ;
 	
 }

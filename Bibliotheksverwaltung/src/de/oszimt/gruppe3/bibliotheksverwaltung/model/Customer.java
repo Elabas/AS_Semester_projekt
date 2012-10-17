@@ -18,9 +18,13 @@ public class Customer implements Serializable {
 	private List<Loan> loanList ;
 
 	public Customer(String name, String surname, int customerID, String address) {
+		this(name,surname,address) ;
+		this.customerID = customerID;
+	}
+	
+	public Customer(String name, String surname, String address) {
 		this.name = name;
 		this.surname = surname;
-		this.customerID = customerID;
 		this.address = address;
 	}
 

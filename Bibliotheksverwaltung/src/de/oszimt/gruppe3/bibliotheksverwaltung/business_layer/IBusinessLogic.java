@@ -25,4 +25,5 @@ public interface IBusinessLogic {
 	public int getBookCount() ;
 	public int getCustomerCount() ;
 	public int getLoanCount() ;
+	public void finish() ;
 }

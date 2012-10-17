@@ -23,64 +23,64 @@ public class Logic implements IBusinessLogic {
 
 	@Override
 	public boolean saveBook(Book book) {
-		//  Book-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Book-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.createBook(book) ;
 	}
 
 	@Override
 	public boolean saveCustomer(Customer customer) {
-		//  Customer-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.createCustomer(customer);
 	}
 
 	@Override
 	public boolean saveLoan(Loan loan) {
-		//  Loan-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.createLoan(loan);
 	}
 
 	@Override
 	public boolean updateBook(Book book) {
-		//  Book-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Book-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.updateBook(book);
 	}
 
 	@Override
 	public boolean updateCustomer(Customer customer) {
-		//  Customer-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.updateCustomer(customer);
 	}
 
 	@Override
 	public boolean updateLoan(Loan loan) {
-		//  Loan-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.updateLoan(loan);
 	}
 
 	@Override
 	public boolean deleteBook(Book book) {
-		//  Book-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Book-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.deleteBook(book);
 	}
 
 	@Override
 	public boolean deleteCustomer(Customer customer) {
-		//  Customer-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.deleteCustomer(customer);
 	}
 
 	@Override
 	public boolean deleteLoan(Loan loan) {
-		//  Loan-Objekt der Datenhaltung Ã¼bergeben und den erhaltenen
-		//  RÃ¼ckgabewert zurÃ¼ckgeben
+		//  Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
 		return dataStorage.deleteLoan(loan);
 	}
 
@@ -128,5 +128,11 @@ public class Logic implements IBusinessLogic {
 	public int getLoanCount() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void finish() {
+		dataStorage.closeDataStorage() ;
+		
 	}
 }
