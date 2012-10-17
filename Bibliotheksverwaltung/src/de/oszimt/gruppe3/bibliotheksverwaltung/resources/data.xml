@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-    <costumer>
-       	<customerID></customerID>
-       	<name></name>
-       	<surname></surname>
-       	<adress></adress>
-    </costumer>
-    
-    <book>
-        <isbn></isbn>
-        <title></title>
-        <author></author>
-        <price></price>
-    </book>
-    
-    <loanBook>
-        <isbn></isbn>
-        <isbn></isbn>
-        <costumerID></costumerID>
-    </loanBook>
+    <costumers>
+        <costumer>
+           	<customerID></customerID>
+           	<name></name>
+           	<surname></surname>
+           	<adress></adress>
+        </costumer>
+    </costumers>
+    <books>
+        <book>
+            <isbn></isbn>
+            <title></title>
+            <author></author>
+            <price></price>
+        </book>
+    </books>
+    <loanBooks>
+        <loanBook>
+            <isbn></isbn>
+            <costumerID></costumerID>
+        </loanBook>
+    </loanBooks>
 </data>
