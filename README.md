@@ -19,4 +19,4 @@ Datum .....Thema
 20.11.2012 .....Logik/ werte dei gesendet und empfangen werden werden geprüft
 16.11.2012 .....Oberfläche/ fertiges Testen der Oberfläche mit Testfällen
 23.11.2012 .....Oberfläche/ überarbeitete Oberfläche
-bis 14.12.2012 .Verbessern und Bearbeiten des Projektes
+bis 14.12.2012 .Verbessern und Bearbeiten des Projektes 
