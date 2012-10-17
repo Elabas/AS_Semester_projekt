@@ -10,6 +10,10 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 public class Logic implements IBusinessLogic {
 
 	private IDataStorage dataStorage ;
+	
+	public Logic(IDataStorage dataStorage) {
+		this.dataStorage = dataStorage;
+	}
 
 	@Override
 	public boolean saveBook(Book book) {
@@ -22,7 +26,7 @@ public class Logic implements IBusinessLogic {
 	public boolean saveCostumer(Costumer customer) {
 		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
 		//  Rückgabewert zurückgeben
-		return dataStorage.createCustomer(customer);
+		return dataStorage.createCostumer(customer);
 	}
 
 	@Override
@@ -34,12 +38,13 @@ public class Logic implements IBusinessLogic {
 
 	@Override
 	public boolean updateBook(Book book) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Book-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.updateBook(book);
 	}
 
 	@Override
-	public boolean updateCostumer(Costumer costumer) {
+	public boolean updateCostumer(Costumer customer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -57,7 +62,7 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public boolean deleteCostumer(Costumer costumer) {
+	public boolean deleteCostumer(Costumer customer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
