@@ -7,6 +7,12 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
+/**
+*
+* @author Tim Müller
+* @version 1.1
+*
+*/
 public class Logic implements IBusinessLogic {
 
 	private IDataStorage dataStorage ;
@@ -45,49 +51,52 @@ public class Logic implements IBusinessLogic {
 
 	@Override
 	public boolean updateCostumer(Costumer customer) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.updateCostumer(customer);
 	}
 
 	@Override
 	public boolean updateLoan(Loan loan) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Loan-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.updateLoan(loan);
 	}
 
 	@Override
 	public boolean deleteBook(Book book) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Book-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.deleteBook(book);
 	}
 
 	@Override
 	public boolean deleteCostumer(Costumer customer) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.deleteCostumer(customer);
 	}
 
 	@Override
 	public boolean deleteLoan(Loan loan) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Loan-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.deleteLoan(loan);
 	}
 
 	@Override
 	public Book readBook(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		return  dataStorage.readBook(isbn) ;		
 	}
 
 	@Override
-	public Costumer readCostumer(int costumerID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Costumer readCostumer(int customerID) {		
+		return dataStorage.readCustomer(customerID) ;
 	}
 
 	@Override
-	public Loan readLoan(String isbn, int costumerID) {
-		// TODO Auto-generated method stub
+	public Loan readLoan(String isbn, int customerID) {
+		
 		return null;
 	}
 
