@@ -13,20 +13,23 @@ public class Logic implements IBusinessLogic {
 
 	@Override
 	public boolean saveBook(Book book) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Book-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.createBook(book) ;
 	}
 
 	@Override
-	public boolean saveCostumer(Costumer costumer) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean saveCostumer(Costumer customer) {
+		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.createCustomer(customer);
 	}
 
 	@Override
 	public boolean saveLoan(Loan loan) {
-		// TODO Auto-generated method stub
-		return false;
+		//  Loan-Objekt der Datenhaltung übergeben und den erhaltenen
+		//  Rückgabewert zurückgeben
+		return dataStorage.createLoan(loan);
 	}
 
 	@Override
