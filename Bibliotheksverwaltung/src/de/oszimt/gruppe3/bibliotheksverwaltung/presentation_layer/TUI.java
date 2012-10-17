@@ -1,6 +1,8 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
+import java.io.Console;
+import java.io.PrintWriter;
 
 /**
  * 
@@ -8,35 +10,38 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
  * @version 1.0
  * 
  */
-public class TUI  {
-
-	private IBusinessLogic logic ;
-	private final String SEPERATOR = "-----------------------------------------------------------------------------------";
-
-	public TUI(IBusinessLogic logic) {
-		this.logic = logic ;
-		this.drawMenu();
+public class TUI {
+	
+	public TUI(){
+		Console con = System.console();
+		if(con == null)
+			System.exit(1);
+		PrintWriter out = con.writer();
+		this.drawMenu(out);
 	}
 	
-	private void drawMenu(){
-		System.out.println("BIBILIOTEK-BÜCHER-KUNDEN-VERWALTUNG");
-		this.drawSeperator();
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Kunden suchen					(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
-		System.out.println("Neuen Kunden Anlegen			(a)");
+	private final String SEPERATOR = "______________________________";
+	
+	private void drawMenu(PrintWriter out){
 		
-		System.out.println();
-		System.out.print("Bitte Wählen Sie einen Menüpunkt: ");
-		
+		out.println("BIBILIOTEK-BÃœCHER-KUNDEN-VERWALTUNG");
+		this.drawSeperator(out);
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Kunden suchen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+		out.println("Neuen Kunden Anlegen (a)");
+
+		out.println();
+		out.print("Bitte WÃ¤hlen Sie einen MenÃ¼punkt: ");
 	}
 	
-	private void drawSeperator(){
-		System.out.println(SEPERATOR);
-		System.out.println();
+	private void drawSeperator(PrintWriter out){
+		out.println(this.SEPERATOR);
+		out.println();
 	}
+
 }
