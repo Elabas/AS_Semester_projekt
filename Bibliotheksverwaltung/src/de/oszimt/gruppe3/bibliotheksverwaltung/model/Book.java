@@ -15,6 +15,7 @@ public class Book implements Serializable {
 	private String title;
 	private String author;
 	private double price;
+	private List<Loan> loanList ;
 
 	public Book(String isbn, String title, String author, double price) {
 		this.isbn = isbn;
@@ -54,4 +55,13 @@ public class Book implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public List<Loan> getLoanList() {
+		return loanList;
+	}
+	
+	public void setLoanList(List<Loan> loanList) {
+		this.loanList = loanList;
+	}
+
 }

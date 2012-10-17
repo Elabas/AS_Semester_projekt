@@ -9,14 +9,15 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class Costumer implements Serializable {
+public class Customer implements Serializable {
 
 	private int customerID;
 	private String name;
 	private String surname;	
 	private String address;
+	private List<Loan> loanList ;
 
-	public Costumer(String name, String surname, int customerID, String address) {
+	public Customer(String name, String surname, int customerID, String address) {
 		this.name = name;
 		this.surname = surname;
 		this.customerID = customerID;
@@ -53,6 +54,14 @@ public class Costumer implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public List<Loan> getLoanList() {
+		return loanList;
+	}
+	
+	public void setLoanList(List<Loan> loanList) {
+		this.loanList = loanList;
 	}
 
 }

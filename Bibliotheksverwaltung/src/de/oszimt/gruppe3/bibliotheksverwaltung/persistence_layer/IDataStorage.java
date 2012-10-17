@@ -3,7 +3,7 @@ package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 import java.util.List;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
-import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 /**
@@ -15,21 +15,21 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 public interface IDataStorage {
 
 	public boolean createBook(Book book) ;
-	public boolean createCostumer(Costumer costumer) ;
+	public boolean createCustomer(Customer customer) ;
 	public boolean createLoan(Loan loan) ;
 	public boolean updateBook(Book book) ;
-	public boolean updateCostumer(Costumer costumer) ;
+	public boolean updateCustomer(Customer customer) ;
 	public boolean updateLoan(Loan loan) ;
 	public boolean deleteBook(Book book) ;
-	public boolean deleteCostumer(Costumer costumer) ;
+	public boolean deleteCustomer(Customer customer) ;
 	public boolean deleteLoan(Loan loan) ;
 	public Book readBook(String isbn) ;
-	public Costumer readCostumer(int costumerID) ;
-	public Loan readLoan(String isbn, int costumerID) ;
-	public List<Loan> getLoansByCostumer(Costumer costumer) ;
+	public Customer readCustomer(int customerID) ;
+	public Loan readLoan(String isbn, int customerID) ;
+	public List<Loan> getLoansByCustomer(Customer customer) ;
 	public List<Loan> getLoansByBook(Book book) ;
 	public int getBookCount() ;
-	public int getCostumerCount() ;
+	public int getCustomerCount() ;
 	public int getLoanCount() ;
 	
 }

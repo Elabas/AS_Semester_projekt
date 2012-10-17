@@ -9,7 +9,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
-import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 public class XML implements IDataStorage {
@@ -31,7 +31,7 @@ public class XML implements IDataStorage {
 	}
 
 	@Override
-	public boolean createCostumer(Costumer costumer) {
+	public boolean createCostumer(Customer costumer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -49,7 +49,7 @@ public class XML implements IDataStorage {
 	}
 
 	@Override
-	public boolean updateCostumer(Costumer costumer) {
+	public boolean updateCostumer(Customer costumer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -67,7 +67,7 @@ public class XML implements IDataStorage {
 	}
 
 	@Override
-	public boolean deleteCostumer(Costumer costumer) {
+	public boolean deleteCostumer(Customer costumer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -85,7 +85,7 @@ public class XML implements IDataStorage {
 	}
 
 	@Override
-	public Costumer readCostumer(int costumerID) {
+	public Customer readCostumer(int costumerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,7 +97,7 @@ public class XML implements IDataStorage {
 	}
 
 	@Override
-	public List<Loan> getLoansByCostumer(Costumer costumer) {
+	public List<Loan> getLoansByCostumer(Customer costumer) {
 		// TODO Auto-generated method stub
 		return null;
 	}

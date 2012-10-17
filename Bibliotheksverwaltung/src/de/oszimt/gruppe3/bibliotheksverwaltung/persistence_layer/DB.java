@@ -3,7 +3,7 @@ package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 import java.util.List;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
-import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 public class DB implements IDataStorage {
@@ -15,7 +15,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public boolean createCostumer(Costumer costumer) {
+	public boolean createCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -33,7 +33,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public boolean updateCostumer(Costumer costumer) {
+	public boolean updateCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -51,7 +51,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public boolean deleteCostumer(Costumer costumer) {
+	public boolean deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -69,7 +69,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public Costumer readCostumer(int costumerID) {
+	public Customer readCustomer(int customerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,7 +81,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public List<Loan> getLoansByCostumer(Costumer costumer) {
+	public List<Loan> getLoansByCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -99,7 +99,7 @@ public class DB implements IDataStorage {
 	}
 
 	@Override
-	public int getCostumerCount() {
+	public int getCustomerCount() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

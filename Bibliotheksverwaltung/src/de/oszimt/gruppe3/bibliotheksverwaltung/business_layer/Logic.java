@@ -3,7 +3,7 @@ package de.oszimt.gruppe3.bibliotheksverwaltung.business_layer;
 import java.util.List;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
-import de.oszimt.gruppe3.bibliotheksverwaltung.model.Costumer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
@@ -29,10 +29,10 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public boolean saveCostumer(Costumer customer) {
+	public boolean saveCustomer(Customer customer) {
 		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
 		//  Rückgabewert zurückgeben
-		return dataStorage.createCostumer(customer);
+		return dataStorage.createCustomer(customer);
 	}
 
 	@Override
@@ -50,10 +50,10 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public boolean updateCostumer(Costumer customer) {
+	public boolean updateCustomer(Customer customer) {
 		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
 		//  Rückgabewert zurückgeben
-		return dataStorage.updateCostumer(customer);
+		return dataStorage.updateCustomer(customer);
 	}
 
 	@Override
@@ -71,10 +71,10 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public boolean deleteCostumer(Costumer customer) {
+	public boolean deleteCustomer(Customer customer) {
 		//  Customer-Objekt der Datenhaltung übergeben und den erhaltenen
 		//  Rückgabewert zurückgeben
-		return dataStorage.deleteCostumer(customer);
+		return dataStorage.deleteCustomer(customer);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public Costumer readCostumer(int customerID) {		
+	public Customer readCustomer(int customerID) {		
 		return dataStorage.readCustomer(customerID) ;
 	}
 
@@ -101,7 +101,7 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public List<Loan> getLoansByCostumer(Costumer costumer) {
+	public List<Loan> getLoansByCostumer(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,7 +119,7 @@ public class Logic implements IBusinessLogic {
 	}
 
 	@Override
-	public int getCostumerCount() {
+	public int getCustomerCount() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
