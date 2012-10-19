@@ -145,13 +145,14 @@ public class DB implements IDataStorage {
 
 	@Override
 	public Book readBook(String isbn) {
-		String sqlStatement = "SELECT * FROM T_Books WHERE isbn ='" + isbn
+		String sqlStatement = "SELECT * FROM T_Books WHERE p_isbn ='" + isbn
 				+ "'";
 		Book newBook = null;
 		ResultSet result = null;
 		try {
 			result = sqlInterface.executeQuery(sqlStatement);
-			newBook = new Book(result.getString("isbn"),
+			result.next() ;
+			newBook = new Book(result.getString("p_isbn"),
 					result.getString("title"), result.getString("author"),
 					result.getDouble("price"));
 		} catch (SQLException e) {
@@ -169,6 +170,7 @@ public class DB implements IDataStorage {
 		ResultSet result = null;
 		try {
 			result = sqlInterface.executeQuery(sqlStatement);
+			result.next() ;
 			newCustomer = new Customer(result.getString("name"),
 					result.getString("surname"),
 					result.getInt("p_customer_id"), result.getString("address"));
@@ -192,6 +194,7 @@ public class DB implements IDataStorage {
 		}
 		try {
 			result = sqlInterface.executeQuery(sqlStatement);
+			result.next() ;
 			newLoan = new Loan(result.getInt("p_loan_id"), newBook,
 					newCustomer, result.getDate("startOfLoan"),
 					result.getDate("endOfLoan"));
@@ -267,7 +270,7 @@ public class DB implements IDataStorage {
 	@Override
 	public int getBookCount() {
 		int bookCount = 0;
-		String sqlStatement = "SELECT count(isbn) FROM T_Books";
+		String sqlStatement = "SELECT count(p_isbn) FROM T_Books";
 		ResultSet result = null;
 		try {
 			result = sqlInterface.executeQuery(sqlStatement);

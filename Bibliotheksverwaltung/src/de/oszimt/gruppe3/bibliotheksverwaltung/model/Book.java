@@ -63,5 +63,10 @@ public class Book implements Serializable {
 	public void setLoanList(List<Loan> loanList) {
 		this.loanList = loanList;
 	}
+	
+	@Override
+	public String toString() {
+		return isbn + "\n" + title + "\n" + author + "\n" + price ;
+	}
 
 }
