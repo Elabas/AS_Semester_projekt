@@ -5,7 +5,7 @@ Zeitplan:
 
 Datum .....Thema
 ---------
-* 07.10.2012 .....Erstellen einer Plattform für den Austausch aller Temamitglieder        Fertig!
+* 07.10.2012 .....Erstellen einer Plattform für den Austausch aller Temamitglied          Fertig!
 * 11.10.2012 .....Erstellen der Package-Struktur                                          Fertig!
 * 13.10.2012 .....Hinzufügen von Klassen                                                  Fertig!
 * 16.10.2012 .....Erstellen von resurce packages                                          Fertig!
