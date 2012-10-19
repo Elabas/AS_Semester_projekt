@@ -13,6 +13,12 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
+/**
+ * 
+ * @author Tim Müller
+ * @version 1.2
+ *
+ */
 public class DB implements IDataStorage {
 
 	private static Connection connection;

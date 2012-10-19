@@ -10,8 +10,8 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
 /**
  * 
- * @author Tim MÃ¼ller
- * @version 1.1
+ * @author Tim Müller
+ * @version 1.2
  * 
  */
 public class Logic implements IBusinessLogic {

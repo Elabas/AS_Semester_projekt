@@ -9,7 +9,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 /**
  * 
  * @author Tim Müller
- * @version 1.0
+ * @version 1.2
  *
  */
 public interface IDataStorage {
