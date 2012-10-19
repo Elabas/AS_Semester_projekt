@@ -23,9 +23,9 @@ public class DBTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Customer customer = new Customer("Horst", "Schlämmer", "Horstweg 1, Grevenbroich") ;
+//		Customer customer = new Customer("Horst", "Schlämmer", "Horstweg 1, Grevenbroich") ;
 //		System.out.println(data.createCustomer(customer)) ;
-		Book book = new Book("978-3826659638", "SCJP", "Terence Gronowski", 49.95) ;
+//		Book book = new Book("978-3826659638", "SCJP", "Terence Gronowski", 49.95) ;
 //		data.createBook(book) ;
 		System.out.println(data.readBook("978-3826659638").toString());
 //		System.out.println(data.createLoan(new Loan(book,customer,new Date("19.10.2012"),new Date("26.10.2012"))));
