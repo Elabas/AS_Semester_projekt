@@ -26,12 +26,13 @@ public interface IDataStorage {
 	public Book readBook(String isbn) ;
 	public Customer readCustomer(int customerID) ;
 	public Loan readLoan(String isbn, int customerID) ;
+	public Loan readLoan(int loanID) ;
 	public List<Loan> getLoansByCustomer(Customer customer) ;
 	public List<Loan> getLoansByBook(Book book) ;
 	public int getBookCount() ;
 	public int getCustomerCount() ;
 	public int getLoanCount() ;
-	public void openDataStorage() ;
-	public void closeDataStorage() ;
+	public void openDataStorage() throws Exception;
+	public boolean closeDataStorage() ;
 	
 }
