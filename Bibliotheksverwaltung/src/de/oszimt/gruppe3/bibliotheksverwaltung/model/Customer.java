@@ -68,4 +68,8 @@ public class Customer implements Serializable {
 		this.loanList = loanList;
 	}
 
+	@Override
+	public String toString() {
+		return customerID + "\n" + name + "\n" + surname + "\n" + address ;
+	}
 }

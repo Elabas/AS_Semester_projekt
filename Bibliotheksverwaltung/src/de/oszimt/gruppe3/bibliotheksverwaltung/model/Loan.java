@@ -14,17 +14,17 @@ public class Loan implements Serializable {
 	private int loanID ;
 	private Book book;
 	private Customer costumer;
-	private Date startOfLoan;
-	private Date endOfLoan;
+	private String startOfLoan;
+	private String endOfLoan;
 
-	public Loan(Book book, Customer costumer, Date startOfLoan, Date endOfLoan) {
+	public Loan(Book book, Customer costumer, String startOfLoan, String endOfLoan) {
 		this.book = book;
 		this.costumer = costumer;
 		this.startOfLoan = startOfLoan;
 		this.endOfLoan = endOfLoan;
 	}
 	
-	public Loan(int loanID,Book book, Customer costumer, Date startOfLoan, Date endOfLoan) {
+	public Loan(int loanID,Book book, Customer costumer, String startOfLoan, String endOfLoan) {
 		this(book,costumer,startOfLoan,endOfLoan) ;
 		this.loanID = loanID ;
 	}
@@ -45,19 +45,19 @@ public class Loan implements Serializable {
 		this.costumer = costumer;
 	}
 
-	public Date getStartOfLoan() {
+	public String getStartOfLoan() {
 		return startOfLoan;
 	}
 
-	public void setStartOfLoan(Date startOfLoan) {
+	public void setStartOfLoan(String startOfLoan) {
 		this.startOfLoan = startOfLoan;
 	}
 
-	public Date getEndOfLoan() {
+	public String getEndOfLoan() {
 		return endOfLoan;
 	}
 
-	public void setEndOfLoan(Date endOfLoan) {
+	public void setEndOfLoan(String endOfLoan) {
 		this.endOfLoan = endOfLoan;
 	}
 	

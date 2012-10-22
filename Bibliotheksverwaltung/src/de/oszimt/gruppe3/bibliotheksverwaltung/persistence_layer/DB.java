@@ -1,6 +1,7 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,11 +73,11 @@ public class DB implements IDataStorage {
 
 	@Override
 	public boolean createCustomer(Customer customer) {
-		String sqlStatement = "INSERT INTO T_Customers(name,prename,address) VALUES"
+		String sqlStatement = "INSERT INTO T_Customers(name,surname,address) VALUES"
 				+ "('"
-				+ customer.getSurname()
-				+ "','"
 				+ customer.getName()
+				+ "','"
+				+ customer.getSurname()
 				+ "','" + customer.getAddress() + "')";
 		int result = 0;
 
@@ -99,7 +100,7 @@ public class DB implements IDataStorage {
 				+ "',"
 				+ loan.getCostumer().getCustomerID()
 				+ ","
-				+ loan.getStartOfLoan() + "," + loan.getEndOfLoan() + ")";
+				+ new Date(loan.getStartOfLoan().getTime()) + "," + new Date(loan.getEndOfLoan().getTime()) + ")";
 		int result = 0;
 		try {
 			result = sqlInterface.executeUpdate(sqlStatement);
