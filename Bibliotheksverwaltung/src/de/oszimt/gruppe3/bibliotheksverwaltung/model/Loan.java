@@ -11,22 +11,24 @@ import java.util.Date;
  */
 public class Loan implements Serializable {
 
-	private int loanID ;
+	private int loanID;
 	private Book book;
-	private Customer costumer;
+	private Customer customer;
 	private String startOfLoan;
 	private String endOfLoan;
 
-	public Loan(Book book, Customer costumer, String startOfLoan, String endOfLoan) {
+	public Loan(Book book, Customer customer, String startOfLoan,
+			String endOfLoan) {
 		this.book = book;
-		this.costumer = costumer;
+		this.customer = customer;
 		this.startOfLoan = startOfLoan;
 		this.endOfLoan = endOfLoan;
 	}
-	
-	public Loan(int loanID,Book book, Customer costumer, String startOfLoan, String endOfLoan) {
-		this(book,costumer,startOfLoan,endOfLoan) ;
-		this.loanID = loanID ;
+
+	public Loan(int loanID, Book book, Customer customer, String startOfLoan,
+			String endOfLoan) {
+		this(book, customer, startOfLoan, endOfLoan);
+		this.loanID = loanID;
 	}
 
 	public Book getBook() {
@@ -38,11 +40,11 @@ public class Loan implements Serializable {
 	}
 
 	public Customer getCostumer() {
-		return costumer;
+		return customer;
 	}
 
-	public void setCostumer(Customer costumer) {
-		this.costumer = costumer;
+	public void setCostumer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getStartOfLoan() {
@@ -60,13 +62,19 @@ public class Loan implements Serializable {
 	public void setEndOfLoan(String endOfLoan) {
 		this.endOfLoan = endOfLoan;
 	}
-	
+
 	public int getLoanID() {
 		return loanID;
 	}
-	
+
 	public void setLoanID(int loanID) {
 		this.loanID = loanID;
+	}
+
+	@Override
+	public String toString() {
+		return book.getIsbn() + "\n" + customer.getCustomerID() + "\n"
+				+ startOfLoan + "\n" + endOfLoan;
 	}
 
 }

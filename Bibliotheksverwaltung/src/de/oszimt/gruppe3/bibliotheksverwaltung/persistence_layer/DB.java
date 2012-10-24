@@ -1,29 +1,27 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
-import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
 /**
  * 
  * @author Tim Müller
  * @version 1.2
- *
+ * 
  */
 public class DB implements IDataStorage {
 
 	private static Connection connection;
-	private Statement sqlInterface;
+	private PreparedStatement sqlInterface;
 	// private String file =
 	// "F:/Tim/Tim/EclipseWorkspace/AS_Semester_projekt/db/BibliothekDB";
 	private String file = "db/BibliothekDB";
@@ -39,7 +37,7 @@ public class DB implements IDataStorage {
 		Class.forName("org.hsqldb.jdbcDriver");
 		connection = DriverManager.getConnection("jdbc:hsqldb:file:" + file
 				+ ";shutdown=true", user, pass);
-		sqlInterface = connection.createStatement();
+		sqlInterface = null;
 	}
 
 	@Override
@@ -55,12 +53,15 @@ public class DB implements IDataStorage {
 
 	@Override
 	public boolean createBook(Book book) {
-		String sqlStatement = "INSERT INTO T_Books VALUES" + "('"
-				+ book.getIsbn() + "','" + book.getTitle() + "','"
-				+ book.getAuthor() + "'," + book.getPrice() + ")";
+		String sqlStatement = "INSERT INTO T_Books VALUES" + "(?,?,?,?)";
 		int result = 0;
 		try {
-			result = sqlInterface.executeUpdate(sqlStatement);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, book.getIsbn());
+			sqlInterface.setString(2, book.getTitle());
+			sqlInterface.setString(3, book.getAuthor());
+			sqlInterface.setDouble(4, book.getPrice());
+			result = sqlInterface.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -73,16 +74,14 @@ public class DB implements IDataStorage {
 
 	@Override
 	public boolean createCustomer(Customer customer) {
-		String sqlStatement = "INSERT INTO T_Customers(name,surname,address) VALUES"
-				+ "('"
-				+ customer.getName()
-				+ "','"
-				+ customer.getSurname()
-				+ "','" + customer.getAddress() + "')";
+		String sqlStatement = "INSERT INTO T_Customers(name,surname,address) VALUES(?,?,?)";
 		int result = 0;
-
 		try {
-			result = sqlInterface.executeUpdate(sqlStatement);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, customer.getName());
+			sqlInterface.setString(2, customer.getSurname());
+			sqlInterface.setString(3, customer.getAddress());
+			result = sqlInterface.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -95,15 +94,15 @@ public class DB implements IDataStorage {
 
 	@Override
 	public boolean createLoan(Loan loan) {
-		String sqlStatement = "INSERT INTO T_Loans(f_isbn,f_customer_id,startOfLoan,endOfLoan) VALUES('"
-				+ loan.getBook().getIsbn()
-				+ "',"
-				+ loan.getCostumer().getCustomerID()
-				+ ","
-				+ new Date(loan.getStartOfLoan().getTime()) + "," + new Date(loan.getEndOfLoan().getTime()) + ")";
+		String sqlStatement = "INSERT INTO T_Loans(f_isbn,f_customer_id,startOfLoan,endOfLoan) VALUES(?,?,?,?)";
 		int result = 0;
 		try {
-			result = sqlInterface.executeUpdate(sqlStatement);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, loan.getBook().getIsbn());
+			sqlInterface.setInt(2, loan.getCostumer().getCustomerID());
+			sqlInterface.setString(3, parseToDBDate(loan.getStartOfLoan()));
+			sqlInterface.setString(4, parseToDBDate(loan.getEndOfLoan()));
+			result = sqlInterface.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -152,16 +151,18 @@ public class DB implements IDataStorage {
 
 	@Override
 	public Book readBook(String isbn) {
-		String sqlStatement = "SELECT * FROM T_Books WHERE p_isbn ='" + isbn
-				+ "'";
+		String sqlStatement = "SELECT * FROM T_Books WHERE p_isbn = ?";
 		Book newBook = null;
 		ResultSet result = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			result.next() ;
-			newBook = new Book(result.getString("p_isbn"),
-					result.getString("title"), result.getString("author"),
-					result.getDouble("price"));
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, isbn);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				newBook = new Book(result.getString("p_isbn"),
+						result.getString("title"), result.getString("author"),
+						result.getDouble("price"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -171,16 +172,19 @@ public class DB implements IDataStorage {
 
 	@Override
 	public Customer readCustomer(int customerID) {
-		String sqlStatement = "SELECT * FROM T_Customers WHERE p_customer_id ="
-				+ customerID;
+		String sqlStatement = "SELECT * FROM T_Customers WHERE p_customer_id = ?";
 		Customer newCustomer = null;
 		ResultSet result = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			result.next() ;
-			newCustomer = new Customer(result.getString("name"),
-					result.getString("surname"),
-					result.getInt("p_customer_id"), result.getString("address"));
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setInt(1, customerID);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				newCustomer = new Customer(result.getString("name"),
+						result.getString("surname"),
+						result.getInt("p_customer_id"),
+						result.getString("address"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -192,19 +196,23 @@ public class DB implements IDataStorage {
 	public Loan readLoan(String isbn, int customerID) {
 		Book newBook = readBook(isbn);
 		Customer newCustomer = readCustomer(customerID);
-		String sqlStatement = "SELECT p_loan_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn ='"
-				+ isbn + "' AND f_customer_id =" + customerID;
+		String sqlStatement = "SELECT p_loan_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn = ? AND f_customer_id = ?";
 		ResultSet result = null;
 		Loan newLoan = null;
 		if (newBook == null || newCustomer == null) {
 			return null;
 		}
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			result.next() ;
-			newLoan = new Loan(result.getInt("p_loan_id"), newBook,
-					newCustomer, result.getDate("startOfLoan"),
-					result.getDate("endOfLoan"));
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, isbn);
+			sqlInterface.setInt(2, customerID);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				newLoan = new Loan(result.getInt("p_loan_id"), newBook,
+						newCustomer,
+						parseToLocalDate(result.getString("startOfLoan")),
+						parseToLocalDate(result.getString("endOfLoan")));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -214,15 +222,20 @@ public class DB implements IDataStorage {
 
 	@Override
 	public Loan readLoan(int loanID) {
-		String sqlStatement = "SELECT * FROM T_Loans WHERE p_loan_id ="
-				+ loanID;
+		String sqlStatement = "SELECT * FROM T_Loans WHERE p_loan_id = ?";
 		ResultSet result = null;
 		Loan newLoan = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			newLoan = new Loan(loanID, readBook(result.getString("f_isbn")),
-					readCustomer(result.getInt("f_customer_id")),
-					result.getDate("startOfLoan"), result.getDate("endOfLoan"));
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setInt(1, loanID);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				newLoan = new Loan(loanID,
+						readBook(result.getString("f_isbn")),
+						readCustomer(result.getInt("f_customer_id")),
+						parseToLocalDate(result.getString("startOfLoan")),
+						parseToLocalDate(result.getString("endOfLoan")));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -232,17 +245,18 @@ public class DB implements IDataStorage {
 
 	@Override
 	public List<Loan> getLoansByCustomer(Customer customer) {
-		String sqlStatement = "SELECT p_loan_id,f_isbn,startOfLoan,endOfLoan FROM T_Loans WHERE f_customer_id ="
-				+ customer.getCustomerID() + " ORDER BY p_loan_id";
+		String sqlStatement = "SELECT p_loan_id,f_isbn,startOfLoan,endOfLoan FROM T_Loans WHERE f_customer_id = ? ORDER BY p_loan_id";
 		ResultSet result = null;
 		List<Loan> loanList = new ArrayList<Loan>();
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setInt(1, customer.getCustomerID());
+			result = sqlInterface.executeQuery();
 			while (result.next()) {
 				Loan tmpLoan = new Loan(result.getInt("p_loan_id"),
 						readBook(result.getString("f_isbn")), customer,
-						result.getDate("startOfLoan"),
-						result.getDate("endOfLoan"));
+						parseToLocalDate(result.getString("startOfLoan")),
+						parseToLocalDate(result.getString("endOfLoan")));
 				loanList.add(tmpLoan);
 			}
 		} catch (SQLException e) {
@@ -254,17 +268,18 @@ public class DB implements IDataStorage {
 
 	@Override
 	public List<Loan> getLoansByBook(Book book) {
-		String sqlStatement = "SELECT p_loan_id,f_customer_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn='"
-				+ book.getIsbn() + "'";
+		String sqlStatement = "SELECT p_loan_id,f_customer_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn= ? ORDER BY p_loan_id";
 		ResultSet result = null;
 		List<Loan> loanList = new ArrayList<Loan>();
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, book.getIsbn());
+			result = sqlInterface.executeQuery();
 			while (result.next()) {
 				Loan tmpLoan = new Loan(result.getInt("p_loan_id"), book,
 						readCustomer(result.getInt("f_customer_id")),
-						result.getDate("startOfLoan"),
-						result.getDate("endOfLoan"));
+						parseToLocalDate(result.getString("startOfLoan")),
+						parseToLocalDate(result.getString("endOfLoan")));
 				loanList.add(tmpLoan);
 			}
 		} catch (SQLException e) {
@@ -280,8 +295,11 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT count(p_isbn) FROM T_Books";
 		ResultSet result = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			bookCount = result.getInt(1);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				bookCount = result.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -295,8 +313,11 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT count(p_customer_id) FROM T_Customers";
 		ResultSet result = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			customerCount = result.getInt(1);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				customerCount = result.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -310,13 +331,44 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT count(p_loan_id) FROM T_Loans";
 		ResultSet result = null;
 		try {
-			result = sqlInterface.executeQuery(sqlStatement);
-			loanCount = result.getInt(1);
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			result = sqlInterface.executeQuery();
+			while (result.next()) {
+				loanCount = result.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
 		}
 		return loanCount;
+	}
+
+	private String parseToDBDate(String date) {
+		String[] dateArray = date.split("\\.");
+		if (dateArray.length != 3) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(dateArray[2]);
+		sb.append("-");
+		sb.append(dateArray[1]);
+		sb.append("-");
+		sb.append(dateArray[0]);
+		return sb.toString();
+	}
+
+	private String parseToLocalDate(String date) {
+		String[] dateArray = date.split("-");
+		if (dateArray.length != 3) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(dateArray[2]);
+		sb.append(".");
+		sb.append(dateArray[1]);
+		sb.append(".");
+		sb.append(dateArray[0]);
+		return sb.toString();
 	}
 
 }
