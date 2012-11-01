@@ -231,6 +231,10 @@ public class Logic implements IBusinessLogic {
 		return true ;
 	}
 	
+	public boolean isDate(String date) {		
+		return date.matches("^\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}$") ;
+	}
+	
 	private boolean checkLoan(Loan loan) {
 		if ( loan == null) {
 			return false ;
@@ -241,10 +245,10 @@ public class Logic implements IBusinessLogic {
 		if (! checkCustomer(loan.getCostumer())) {
 			return false ;
 		}
-		if (! (loan.getStartOfLoan() instanceof Date )) {
+		if (! isDate(loan.getStartOfLoan())) {
 			return false ;
 		}
-		if (! (loan.getEndOfLoan() instanceof Date )) {
+		if (! isDate(loan.getEndOfLoan())) {
 			return false ;
 		}
 		return true ;

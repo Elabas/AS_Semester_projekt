@@ -43,7 +43,9 @@ public class DB implements IDataStorage {
 	@Override
 	public boolean closeDataStorage() {
 		try {
-			sqlInterface.close();
+			if (sqlInterface != null) {
+				sqlInterface.close();
+			}
 			connection.close();
 		} catch (SQLException e) {
 			return false;
@@ -115,37 +117,114 @@ public class DB implements IDataStorage {
 
 	@Override
 	public boolean updateBook(Book book) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "UPDATE T_Books SET p_isbn = ?, title = ?, author = ?, price = ? WHERE p_isbn = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, book.getIsbn());
+			sqlInterface.setString(2, book.getTitle());
+			sqlInterface.setString(3, book.getAuthor());
+			sqlInterface.setDouble(4, book.getPrice());
+			sqlInterface.setString(5, book.getIsbn());
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "UPDATE T_Customers SET name = ?, surname = ?, address = ? WHERE p_customer_id = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, customer.getName());
+			sqlInterface.setString(2, customer.getSurname());
+			sqlInterface.setString(3, customer.getAddress());
+			sqlInterface.setInt(4, customer.getCustomerID());
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean updateLoan(Loan loan) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "UPDATE T_Loans SET f_isbn = ?, f_customer_id = ?, startOfLoan = ?, endOfLoan = ? WHERE p_loan_id = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, loan.getBook().getIsbn());
+			sqlInterface.setInt(2, loan.getCostumer().getCustomerID());
+			sqlInterface.setString(3, parseToDBDate(loan.getStartOfLoan()));
+			sqlInterface.setString(4, parseToDBDate(loan.getEndOfLoan()));
+			sqlInterface.setInt(5,loan.getLoanID()) ;
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteBook(Book book) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "DELETE FROM T_Books WHERE p_isbn = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, book.getIsbn());
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "DELETE FROM T_Customers WHERE p_customer_id = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setInt(1, customer.getCustomerID());
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteLoan(Loan loan) {
-		// TODO Auto-generated method stub
+		String sqlStatement = "DELETE FROM T_Loans WHERE p_loan_id = ?";
+		int result = 0;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setInt(1, loan.getLoanID());
+			result = sqlInterface.executeUpdate();
+		} catch (SQLException e) {
+			return false;
+		}
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 
@@ -164,7 +243,6 @@ public class DB implements IDataStorage {
 						result.getDouble("price"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 		return newBook;
@@ -186,7 +264,6 @@ public class DB implements IDataStorage {
 						result.getString("address"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 		return newCustomer;
@@ -214,7 +291,6 @@ public class DB implements IDataStorage {
 						parseToLocalDate(result.getString("endOfLoan")));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 		return newLoan;
@@ -237,7 +313,6 @@ public class DB implements IDataStorage {
 						parseToLocalDate(result.getString("endOfLoan")));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 		return newLoan;
@@ -283,7 +358,6 @@ public class DB implements IDataStorage {
 				loanList.add(tmpLoan);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 		return loanList;
@@ -301,7 +375,6 @@ public class DB implements IDataStorage {
 				bookCount = result.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return -1;
 		}
 		return bookCount;
@@ -319,7 +392,6 @@ public class DB implements IDataStorage {
 				customerCount = result.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return -1;
 		}
 		return customerCount;
