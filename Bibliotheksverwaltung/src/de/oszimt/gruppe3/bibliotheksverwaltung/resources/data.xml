@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 
-    <costumers>
-        <costumer>
+    <customers>
+        <customer>
            	<customerID>1</customerID>
            	<name>Max</name>
            	<surname>Musterman</surname>
-           	<adress>Musterstraße</adress>
-        </costumer>
-    </costumers>
+           	<address>Musterstraße</address>
+        </customer>
+    </customers>
     
     <books>
         <book>
@@ -21,8 +21,11 @@
     
     <loanBooks>
         <loanBook>
+            <loanID>1</loanID>
             <isbn>123456789</isbn>
-            <costumerID>1</costumerID>
+            <CustomerID>1</CustomerID>
+            <startOfLoan></startOfLoan>
+            <endOfLoan></endOfLoan>
         </loanBook>
     </loanBooks>
     
