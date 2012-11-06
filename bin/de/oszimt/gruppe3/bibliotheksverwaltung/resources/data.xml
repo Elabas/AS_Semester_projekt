@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-<costumers>
-    <costumer>
+<customers>
+    <customer>
            <customerID></customerID>
        	<name></name>
        	<surname></surname>
        	<adress></adress>
-    </costumer>
-</costumers>
+    </customer>
+</customers>
 <books>
     <book>
         <isbn></isbn>
@@ -20,7 +20,7 @@
     <loanBook>
         <isbn></isbn>
         <isbn></isbn>
-        <costumerID></costumerID>
+        <customerID></customerID>
     </loanBook>
 </loanBooks>
 </data>
