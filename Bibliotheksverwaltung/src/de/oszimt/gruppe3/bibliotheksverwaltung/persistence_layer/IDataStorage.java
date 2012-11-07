@@ -34,5 +34,6 @@ public interface IDataStorage {
 	public int getLoanCount() ;
 	public void openDataStorage() throws Exception;
 	public boolean closeDataStorage() ;
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) ;
 	
 }

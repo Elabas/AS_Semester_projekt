@@ -233,6 +233,7 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT * FROM T_Books WHERE p_isbn = ?";
 		Book newBook = null;
 		ResultSet result = null;
+		List<Loan> loanList = new ArrayList<Loan>() ;
 		try {
 			sqlInterface = connection.prepareStatement(sqlStatement);
 			sqlInterface.setString(1, isbn);
@@ -241,6 +242,10 @@ public class DB implements IDataStorage {
 				newBook = new Book(result.getString("p_isbn"),
 						result.getString("title"), result.getString("author"),
 						result.getDouble("price"));
+				loanList = getLoansByBook(newBook) ;
+				if (loanList != null) {
+					newBook.setLoanList(loanList) ;
+				}
 			}
 		} catch (SQLException e) {
 			return null;
@@ -253,6 +258,7 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT * FROM T_Customers WHERE p_customer_id = ?";
 		Customer newCustomer = null;
 		ResultSet result = null;
+		List<Loan> loanList = new ArrayList<Loan>() ;
 		try {
 			sqlInterface = connection.prepareStatement(sqlStatement);
 			sqlInterface.setInt(1, customerID);
@@ -262,6 +268,10 @@ public class DB implements IDataStorage {
 						result.getString("surname"),
 						result.getInt("p_customer_id"),
 						result.getString("address"));
+				loanList = getLoansByCustomer(newCustomer) ;
+				if(loanList != null) {
+					newCustomer.setLoanList(loanList) ;
+				}
 			}
 		} catch (SQLException e) {
 			return null;
@@ -441,6 +451,11 @@ public class DB implements IDataStorage {
 		sb.append(".");
 		sb.append(dateArray[0]);
 		return sb.toString();
+	}
+	
+	@Override
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
+		
 	}
 
 }
