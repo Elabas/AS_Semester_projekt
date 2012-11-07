@@ -10,7 +10,7 @@ Datum .....Thema
 * 13.10.2012 .....Hinzufügen von Klassen                                            	   Fertig!
 * 16.10.2012 .....Erstellen von resurce packages                                           Fertig!
 * 17.10.2012 .....Überarbeiten der Package-Struktur                                        Fertig!
-* 22.10.2012 .....Oberfläche/ fertige Datenhaltung (XML) 
+* 22.10.2012 .....Datenhaltung/ fertige Datenhaltung (XML)                                Fertig!
 * 18.10.2012 .....Datenhaltung/ eingerichtete Treiber (Datenbank)                          Fertig!
 * 26.10.2012 .....Datenhaltung/ Aufsetzen der Datenbank                                    Fertig! 
 * 29.10.2012 .....Datenhaltung/ erstellen der Datenbankverbindung                          Fertig! 
