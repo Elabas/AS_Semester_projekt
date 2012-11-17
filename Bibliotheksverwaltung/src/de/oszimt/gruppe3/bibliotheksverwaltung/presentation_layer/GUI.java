@@ -1,6 +1,14 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
-import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 
 /**
  * 

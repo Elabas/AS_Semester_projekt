@@ -15,7 +15,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 /**
  * 
  * @author Tim Müller
- * @version 1.2
+ * @version 1.3
  * 
  */
 public class DB implements IDataStorage {
@@ -233,7 +233,6 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT * FROM T_Books WHERE p_isbn = ?";
 		Book newBook = null;
 		ResultSet result = null;
-		List<Loan> loanList = new ArrayList<Loan>() ;
 		try {
 			sqlInterface = connection.prepareStatement(sqlStatement);
 			sqlInterface.setString(1, isbn);
@@ -242,10 +241,6 @@ public class DB implements IDataStorage {
 				newBook = new Book(result.getString("p_isbn"),
 						result.getString("title"), result.getString("author"),
 						result.getDouble("price"));
-				loanList = getLoansByBook(newBook) ;
-				if (loanList != null) {
-					newBook.setLoanList(loanList) ;
-				}
 			}
 		} catch (SQLException e) {
 			return null;
@@ -258,7 +253,6 @@ public class DB implements IDataStorage {
 		String sqlStatement = "SELECT * FROM T_Customers WHERE p_customer_id = ?";
 		Customer newCustomer = null;
 		ResultSet result = null;
-		List<Loan> loanList = new ArrayList<Loan>() ;
 		try {
 			sqlInterface = connection.prepareStatement(sqlStatement);
 			sqlInterface.setInt(1, customerID);
@@ -268,10 +262,6 @@ public class DB implements IDataStorage {
 						result.getString("surname"),
 						result.getInt("p_customer_id"),
 						result.getString("address"));
-				loanList = getLoansByCustomer(newCustomer) ;
-				if(loanList != null) {
-					newCustomer.setLoanList(loanList) ;
-				}
 			}
 		} catch (SQLException e) {
 			return null;
@@ -455,7 +445,25 @@ public class DB implements IDataStorage {
 	
 	@Override
 	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
-		
+		String sqlStatement = "SELECT * FROM T_Loans WHERE f_isbn = ? AND (startOfLoan > ? OR endOfLoan < ?) ";
+		ResultSet result = null;
+		int counter = -1 ;
+		try {
+			sqlInterface = connection.prepareStatement(sqlStatement);
+			sqlInterface.setString(1, book.getIsbn()) ;
+			sqlInterface.setString(2, parseToDBDate(endOfLoan)) ;
+			sqlInterface.setString(3, parseToDBDate(startOfLoan)) ;
+			result = sqlInterface.executeQuery();
+			while (result.next()) {				
+				counter++ ;		
+			}
+		} catch (SQLException e) {
+			return false ;
+		}
+		if (counter < 0) {
+			return false ;
+		}
+		return true ;
 	}
 
 }

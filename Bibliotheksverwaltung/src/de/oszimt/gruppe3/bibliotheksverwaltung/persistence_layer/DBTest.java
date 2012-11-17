@@ -33,14 +33,33 @@ public class DBTest {
 //		Book book = new Book("978-3826659638", "SCJP", "Terence Gronowski",
 //		 49.95) ;
 //		 data.createBook(book) ;
-//		Book book = data.readBook("978-3826659638");
-//		Customer customer = data.readCustomer(1);
+		Logic logic = new Logic(data) ; 
+		Book book = logic.readBook("978-3826659638");
+//		System.out.println(book);		
+//		Customer customer = logic.readCustomer(2);
+//		System.out.println(customer);
+//		Loan loan = new Loan(book, customer, "17.11.2012", "23.11.2012") ;
+//		Loan loan1 = new Loan(book, customer, "11.11.2012", "16.11.2012") ;
+//		Loan loan2 = new Loan(book, customer, "24.11.2012", "27.11.2012") ;
+//		Loan loan3 = new Loan(book, customer, "17.11.2012", "13.11.2012") ;
+//		Loan loan4 = new Loan(book, customer, "15.11.2012", "21.11.2012") ;
+//		Loan loan5 = new Loan(book, customer, "19.11.2012", "21.11.2012") ;
+//		Loan loan6 = new Loan(book, customer, "19.11.2012", "27.11.2012") ;
+		System.out.println("loan  :" + logic.isAvailable(book, "17.11.2012", "23.11.2012"));  // false
+		System.out.println("loan1 :" + logic.isAvailable(book, "11.11.2012", "16.11.2012")); // true
+		System.out.println("loan2 :" + logic.isAvailable(book, "24.11.2012", "27.11.2012")); // true
+		System.out.println("loan3 :" + logic.isAvailable(book, "17.11.2012", "13.11.2012")); // false
+		System.out.println("loan4 :" + logic.isAvailable(book, "15.11.2012", "21.11.2012")); // false
+		System.out.println("loan5 :" + logic.isAvailable(book, "19.11.2012", "21.11.2012")); // false
+		System.out.println("loan6 :" + logic.isAvailable(book, "19.11.2012", "27.11.2012")); // false
+
 //		Loan loan = data.readLoan(2) ;
 //		System.out.println(loan);
 //		System.out.println(data.getBookCount());
 //		System.out.println(data.getCustomerCount());
 //		System.out.println(data.getLoanCount());
-		Logic logic = new Logic(data) ; 
+		
+//		System.out.println(logic.saveLoan(loan));
 //		Book book = data.readBook("978-3826659638");
 //		System.out.println(book);
 //		book.setPrice(49.95) ;
