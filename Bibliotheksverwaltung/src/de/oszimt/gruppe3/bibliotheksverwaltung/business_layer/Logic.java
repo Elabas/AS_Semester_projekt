@@ -13,7 +13,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 /**
  * 
  * @author Tim Müller
- * @version 1.3
+ * @version 1.4
  * 
  */
 public class Logic implements IBusinessLogic {
@@ -320,5 +320,29 @@ public class Logic implements IBusinessLogic {
 			return dataStorage.isAvailable(book, startOfLoan, endOfLoan) ;
 		}
 		return false ;
+	}
+
+	@Override
+	public List<Customer> searchCustomer(String term) {
+		List<Customer> results = dataStorage.searchCustomer(term) ;
+		if (results != null) {
+			for (Customer customer : results) {
+				customer.setLoanList(dataStorage.getLoansByCustomer(customer)) ;
+			}
+			return results ;
+		}
+		return null ;
+	}
+
+	@Override
+	public List<Book> searchBook(String term) {
+		List<Book> results = dataStorage.searchBook(term) ;
+		if (results != null) {
+			for (Book book :results) {
+				book.setLoanList(dataStorage.getLoansByBook(book)) ;
+			}
+			return results ;
+		}
+		return null ;
 	}
 }
