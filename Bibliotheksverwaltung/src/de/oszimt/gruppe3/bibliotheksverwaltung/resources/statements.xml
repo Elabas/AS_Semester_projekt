@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+<statements>
+	<statement id="createBook">INSERT INTO T_Books VALUES" + "(?,?,?,?)</statement>
+	<statement id="createCustomer">INSERT INTO T_Customers(name,surname,address) VALUES(?,?,?)</statement>
+	<statement id="createLoan">INSERT INTO T_Loans(f_isbn,f_customer_id,startOfLoan,endOfLoan) VALUES(?,?,?,?)</statement>
+	<statement id="deleteBook">DELETE FROM T_Books WHERE p_isbn = ?</statement>
+	<statement id="deleteCustomer">DELETE FROM T_Customers WHERE p_customer_id = ?</statement>
+	<statement id="deleteLoan">DELETE FROM T_Loans WHERE p_loan_id = ?</statement>
+	<statement id="getBookCount">SELECT count(p_isbn) FROM T_Books</statement>
+	<statement id="getCustomerCount">SELECT count(p_customer_id) FROM T_Customers</statement>
+	<statement id="getLoanCount">SELECT count(p_loan_id) FROM T_Loans</statement>
+	<statement id="getLoansByBook">SELECT p_loan_id,f_customer_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn= ? ORDER BY p_loan_id</statement>
+	<statement id="getLoansByCustomer">SELECT p_loan_id,f_isbn,startOfLoan,endOfLoan FROM T_Loans WHERE f_customer_id = ? ORDER BY p_loan_id</statement>
+	<statement id="isAvailable"><![CDATA[SELECT * FROM T_Loans WHERE f_isbn = ? AND (startOfLoan > ? OR endOfLoan < ?)]]></statement>
+	<statement id="readBook">SELECT * FROM T_Books WHERE p_isbn = ?</statement>
+	<statement id="readCustomer">SELECT * FROM T_Customers WHERE p_customer_id = ?</statement>
+	<statement id="readLoan">SELECT * FROM T_Loans WHERE p_loan_id = ?</statement>
+	<statement id="readLoan2">SELECT p_loan_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn = ? AND f_customer_id = ?</statement>
+	<statement id="searchBook">SELECT * FROM T_Books WHERE p_isbn LIKE ? OR title LIKE ? OR author LIKE ? OR price LIKE ?</statement>
+	<statement id="searchCustomer">SELECT * FROM T_Customers WHERE name LIKE ? OR surname LIKE ? OR address LIKE ?</statement>
+	<statement id="updateBook">UPDATE T_Books SET p_isbn = ?, title = ?, author = ?, price = ? WHERE p_isbn = ?</statement>
+	<statement id="updateCustomer">UPDATE T_Customers SET name = ?, surname = ?, address = ? WHERE p_customer_id = ?</statement>
+	<statement id="updateLoan">UPDATE T_Loans SET f_isbn = ?, f_customer_id = ?, startOfLoan = ?, endOfLoan = ? WHERE p_loan_id = ?</statement>
+</statements>
