@@ -23,7 +23,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 /**
  * 
- * @author Tim Müller
+ * @author Tim Mï¿½ller
  * @version 1.5
  * 
  */
@@ -249,8 +249,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param book - das zu löschende Buch
-	 * @return <b>true</b> - wenn das Buch erfolgreich aus der Datenbank gelöscht wurde<br>
+	 * @param book - das zu lï¿½schende Buch
+	 * @return <b>true</b> - wenn das Buch erfolgreich aus der Datenbank gelï¿½scht wurde<br>
 	 * 		   <b>false</b> - wenn ein Fehler auftrat	
 	 */
 	@Override
@@ -272,8 +272,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param customer - der zu löschende Kunde
-	 * @return <b>true</b> - wenn der Kunde erfolgreich aus der Datenbank gelöscht wurde<br>
+	 * @param customer - der zu lï¿½schende Kunde
+	 * @return <b>true</b> - wenn der Kunde erfolgreich aus der Datenbank gelï¿½scht wurde<br>
 	 * 		   <b>false</b> - wenn ein Fehler auftrat	
 	 */
 	@Override
@@ -295,8 +295,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param loan - die zu löschende Leihe
-	 * @return <b>true</b> - wenn die Leihe erfolgreich aus der Datenbank gelöscht wurde<br>
+	 * @param loan - die zu lï¿½schende Leihe
+	 * @return <b>true</b> - wenn die Leihe erfolgreich aus der Datenbank gelï¿½scht wurde<br>
 	 * 		   <b>false</b> - wenn ein Fehler auftrat	
 	 */
 	@Override
@@ -318,8 +318,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param isbn - die ISBN des gewünschten Buches
-	 * @return <b>newBook</b> - ein Objekt des gewünschten Buches<br>
+	 * @param isbn - die ISBN des gewï¿½nschten Buches
+	 * @return <b>newBook</b> - ein Objekt des gewï¿½nschten Buches<br>
 	 * 		   <b>null</b> - wenn ein Fehler auftrat oder das Buch nicht vorhanden ist
 	 */
 	@Override
@@ -345,8 +345,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param customerID - die ID des gewünschten Kunden
-	 * @return <b>newCustomer</b> - ein Objekt des gewünschten Kunden<br>
+	 * @param customerID - die ID des gewï¿½nschten Kunden
+	 * @return <b>newCustomer</b> - ein Objekt des gewï¿½nschten Kunden<br>
 	 * 		   <b>null</b> - wenn ein Fehler auftrat oder der Kunde nicht vorhanden ist
 	 */
 	@Override
@@ -374,7 +374,7 @@ public class DB implements IDataStorage {
 	 * @since 1.0
 	 * @param isbn - die ISBN des geliehenen Buches
 	 * @param customerID - die ID des Kunden, der das Buch geliehen hat 	
-	 * @return <b>newLoan</b> - ein Objekt der gewünschten Leihe<br>
+	 * @return <b>newLoan</b> - ein Objekt der gewï¿½nschten Leihe<br>
 	 * 		   <b>null</b> - wenn ein Fehler auftrat oder das Buch,der Kunde oder die Leihe nicht vorhanden sind
 	 */
 	@Override
@@ -406,8 +406,8 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.0
-	 * @param loanID - die ID der gewünschten Leihe
-	 * @return <b>newLoan</b> - ein Objekt der gewünschten Leihe<br>
+	 * @param loanID - die ID der gewï¿½nschten Leihe
+	 * @return <b>newLoan</b> - ein Objekt der gewï¿½nschten Leihe<br>
 	 * 		   <b>null</b> - wenn ein Fehler auftrat oder die Leihe nicht vorhanden ist
 	 */
 	@Override
@@ -491,7 +491,7 @@ public class DB implements IDataStorage {
 
 	/**
 	 * @since 1.2
-	 * @return <b>bookCount</b> - die Anzahl der vorhandenen Bücher
+	 * @return <b>bookCount</b> - die Anzahl der vorhandenen Bï¿½cher
 	 */
 	@Override
 	public int getBookCount() {
@@ -517,7 +517,7 @@ public class DB implements IDataStorage {
 	@Override
 	public int getCustomerCount() {
 		int customerCount = 0;
-		String sqlStatement = "";
+		String sqlStatement = statements.get("getCustomerCount");
 		ResultSet result = null;
 		try {
 			sqlInterface = connection.prepareStatement(sqlStatement);
@@ -596,8 +596,8 @@ public class DB implements IDataStorage {
 	 * @param book - das zu leihende Buch
 	 * @param startOfLoan - das Startdatum der Leihe
 	 * @param endOfLoan - das Enddatum der Leihe
-	 * @return <b>true</b> - wenn das Buch im angegebenen Zeitraum verfügbar ist<br>
-	 * 		   <b>false</b> - wenn ein Fehler auftrat oder das Buch nicht verfügbar ist	
+	 * @return <b>true</b> - wenn das Buch im angegebenen Zeitraum verfï¿½gbar ist<br>
+	 * 		   <b>false</b> - wenn ein Fehler auftrat oder das Buch nicht verfï¿½gbar ist	
 	 */
 	@Override
 	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
