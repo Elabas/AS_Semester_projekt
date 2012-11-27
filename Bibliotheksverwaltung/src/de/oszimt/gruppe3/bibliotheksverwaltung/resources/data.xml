@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-
-    <customers>
-        <customer>
-           	<customerID>1</customerID>
-           	<name>Max</name>
-           	<surname>Musterman</surname>
-           	<address>Musterstraße</address>
-        </customer>
-    </customers>
-    
-    <books>
-        <book>
-            <isbn>123456789</isbn>
-            <title>Musterbuch</title>
-            <author>Max Musterman</author>
-            <price>1,30</price>
-        </book>
-    </books>
-    
-    <loanBooks>
-        <loanBook>
-            <loanID>1</loanID>
-            <isbn>123456789</isbn>
-            <CustomerID>1</CustomerID>
-            <startOfLoan></startOfLoan>
-            <endOfLoan></endOfLoan>
-        </loanBook>
-    </loanBooks>
-    
+    <customers />
+    <books />
+    <loanBooks /> 
 </data>
