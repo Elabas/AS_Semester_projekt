@@ -1,6 +1,7 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class Customer implements Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.address = address;
+		this.loanList = new ArrayList<Loan>() ;
 	}
 
 	public String getName() {
@@ -66,6 +68,14 @@ public class Customer implements Serializable {
 	
 	public void setLoanList(List<Loan> loanList) {
 		this.loanList = loanList;
+	}
+	
+	public boolean addLoan(Loan loan) {
+		return loanList.add(loan) ;
+	}
+	
+	public boolean removeLoan(Loan loan) {
+		return loanList.remove(loan) ;
 	}
 
 	@Override

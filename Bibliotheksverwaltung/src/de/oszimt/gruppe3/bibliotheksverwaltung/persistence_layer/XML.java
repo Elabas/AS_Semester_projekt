@@ -398,5 +398,23 @@ public class XML implements IDataStorage {
 		return this.saveToFile();
 	}
 
+	@Override
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Customer> searchCustomer(String term) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Book> searchBook(String term) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

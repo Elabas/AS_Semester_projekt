@@ -9,7 +9,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 /**
  * 
  * @author Tim Müller
- * @version 1.2
+ * @version 1.4
  *
  */
 public interface IDataStorage {
@@ -34,5 +34,7 @@ public interface IDataStorage {
 	public int getLoanCount() ;
 	public void openDataStorage() throws Exception;
 	public boolean closeDataStorage() ;
-	
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) ;
+	public List<Customer> searchCustomer(String term) ;
+	public List<Book> searchBook(String term) ;
 }

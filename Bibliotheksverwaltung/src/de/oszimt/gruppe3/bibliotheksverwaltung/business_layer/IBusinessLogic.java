@@ -5,7 +5,14 @@ import java.util.List;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
+/**
+ * 
+ * @author Tim Müller
+ * @version 1.4
+ * 
+ */
 public interface IBusinessLogic {
 
 	public boolean saveBook(Book book) ;
@@ -26,4 +33,8 @@ public interface IBusinessLogic {
 	public int getCustomerCount() ;
 	public int getLoanCount() ;
 	public void finish() ;
+	public boolean changePersistence(IDataStorage dataStorage) ;
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) ;
+	public List<Customer> searchCustomer(String term) ;
+	public List<Book> searchBook(String term) ;
 }

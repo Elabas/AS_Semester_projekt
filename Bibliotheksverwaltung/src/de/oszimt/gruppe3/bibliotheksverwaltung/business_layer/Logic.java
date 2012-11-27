@@ -1,5 +1,7 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.business_layer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 /**
  * 
  * @author Tim Müller
- * @version 1.2
+ * @version 1.4
  * 
  */
 public class Logic implements IBusinessLogic {
@@ -22,18 +24,18 @@ public class Logic implements IBusinessLogic {
 		this.dataStorage = dataStorage;
 	}
 
-	@Override
+	// TODO Kommentierung
+	@Override	
 	public boolean saveBook(Book book) {
 		//  Book-Objekt der Datenhaltung Übergeben und den erhaltenen
 		//  Rückgabewert zurückgeben
 		if (checkBook(book)) {
 			return dataStorage.createBook(book) ; 
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean saveCustomer(Customer customer) {
 		// Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -41,11 +43,10 @@ public class Logic implements IBusinessLogic {
 		if(checkCustomer(customer)) {
 			return dataStorage.createCustomer(customer);
 		}
-		else {
-			return false ;
-		}		
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean saveLoan(Loan loan) {
 		// Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -53,11 +54,10 @@ public class Logic implements IBusinessLogic {
 		if (checkLoan(loan)) {
 			return dataStorage.createLoan(loan);
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean updateBook(Book book) {
 		// Book-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -65,11 +65,10 @@ public class Logic implements IBusinessLogic {
 		if (checkBook(book)) {
 			return dataStorage.updateBook(book) ; 
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean updateCustomer(Customer customer) {
 		// Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -77,11 +76,10 @@ public class Logic implements IBusinessLogic {
 		if(checkCustomer(customer)) {
 			return dataStorage.updateCustomer(customer);
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean updateLoan(Loan loan) {
 		// Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -89,35 +87,39 @@ public class Logic implements IBusinessLogic {
 		if (checkLoan(loan)) {
 			return dataStorage.updateLoan(loan);
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean deleteBook(Book book) {
-		// Book-Objekt der Datenhaltung Übergeben und den erhaltenen
-		// Rückgabewert zurückgeben
+		// Prüfen, ob es sich um ein gültiges Objekt handelt
 		if (checkBook(book)) {
-			return dataStorage.deleteBook(book) ; 
+			// Prüfen, ob das Buch laufende gerade ausgeliehen ist
+			// wenn nicht, versuchen das Buch zu löschen
+			List<Loan> loanList = dataStorage.getLoansByBook(book) ;			
+			if( loanList == null || loanList.size() == 0) {			
+				return dataStorage.deleteBook(book);
+			}
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
 	@Override
-	public boolean deleteCustomer(Customer customer) {
-		// Customer-Objekt der Datenhaltung Übergeben und den erhaltenen
-		// Rückgabewert zurückgeben
+	public boolean deleteCustomer(Customer customer) {		
+		// Prüfen, ob es sich um ein gültiges Objekt handelt
 		if(checkCustomer(customer)) {
-			return dataStorage.deleteCustomer(customer);
+			// Prüfen, ob der Kunde laufende Ausleihen hat
+			// wenn nicht, versuchen den Kunden zu löschen 
+			List<Loan> loanList = dataStorage.getLoansByCustomer(customer) ;			
+			if( loanList == null || loanList.size() == 0) {			
+				return dataStorage.deleteCustomer(customer);
+			}
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public boolean deleteLoan(Loan loan) {
 		// Loan-Objekt der Datenhaltung Übergeben und den erhaltenen
@@ -125,33 +127,32 @@ public class Logic implements IBusinessLogic {
 		if (checkLoan(loan)) {
 			return dataStorage.deleteLoan(loan);
 		}
-		else {
-			return false ;
-		}
+		return false ;
 	}
 
 	@Override
 	public Book readBook(String isbn) {
 		Book newBook = dataStorage.readBook(isbn); 
+		List<Loan> loanList = dataStorage.getLoansByBook(newBook) ;
+		newBook.setLoanList(loanList) ;
 		if (checkBook(newBook)) {
 			return newBook ;
 		}
-		else {
-			return null ;
-		}
+		return null ;
 	}
 
 	@Override
 	public Customer readCustomer(int customerID) {
 		Customer newCustomer = dataStorage.readCustomer(customerID);
+		List<Loan> loanList = dataStorage.getLoansByCustomer(newCustomer) ;
+		newCustomer.setLoanList(loanList) ;
 		if(checkCustomer(newCustomer)) {
 			return newCustomer ;
 		}
-		else {
-			return null ;
-		}
+		return null ;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public Loan readLoan(String isbn, int customerID) {
 		Loan newLoan = dataStorage.readLoan(isbn, customerID) ;
@@ -161,41 +162,58 @@ public class Logic implements IBusinessLogic {
 		return null;
 	}
 
+	// TODO Kommentierung
 	@Override
 	public List<Loan> getLoansByCostumer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		return dataStorage.getLoansByCustomer(customer);
 	}
 
+	// TODO Kommentierung
 	@Override
 	public List<Loan> getLoansByBook(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+		return dataStorage.getLoansByBook(book);
 	}
 
+	/**
+	 * @return -1 falls ein Fehler aufgetreten ist </br> 
+	 * 			0 falls kein Buch vorhanden ist </br> 
+	 * 			ansonsten die Anzahl der Bücher 
+	 */
 	@Override
 	public int getBookCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dataStorage.getBookCount() ;
 	}
 
+	
+	/**
+	 * @return -1 falls ein Fehler aufgetreten ist </br> 
+	 * 			0 falls kein Kunde vorhanden ist </br> 
+	 * 			ansonsten die Anzahl der Kunden 
+	 */
 	@Override
 	public int getCustomerCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dataStorage.getCustomerCount();
 	}
 
+	/**
+	 * @return -1 falls ein Fehler aufgetreten ist </br> 
+	 * 			0 falls keine Leihe vorhanden ist </br> 
+	 * 			ansonsten die Anzahl der Leihen 
+	 */
 	@Override
 	public int getLoanCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dataStorage.getLoanCount();
 	}
 
+	/**
+	 * dient dem Schließen der Datenhaltung
+	 */
 	@Override
 	public void finish() {
 		dataStorage.closeDataStorage();
 	}
 
+	// TODO Kommentierung
 	private boolean checkBook(Book book) {
 		if ( book == null) {
 			return false ;
@@ -215,6 +233,7 @@ public class Logic implements IBusinessLogic {
 		return true;
 	}
 	
+	// TODO Kommentierung
 	private boolean checkCustomer(Customer customer) {
 		if ( customer == null) {
 			return false ;
@@ -230,11 +249,13 @@ public class Logic implements IBusinessLogic {
 		}
 		return true ;
 	}
-	
+		
+	// TODO Kommentierung
 	public boolean isDate(String date) {		
 		return date.matches("^\\d{1,2}\\.\\d{1,2}\\.\\d{2,4}$") ;
 	}
 	
+	// TODO Kommentierung
 	private boolean checkLoan(Loan loan) {
 		if ( loan == null) {
 			return false ;
@@ -245,12 +266,83 @@ public class Logic implements IBusinessLogic {
 		if (! checkCustomer(loan.getCostumer())) {
 			return false ;
 		}
-		if (! isDate(loan.getStartOfLoan())) {
+		if (!isDate(loan.getStartOfLoan()) || !isDate(loan.getEndOfLoan())) {
 			return false ;
 		}
-		if (! isDate(loan.getEndOfLoan())) {
+		if (! checkDateDifference(loan.getStartOfLoan(), loan.getEndOfLoan())) {
 			return false ;
 		}
 		return true ;
+	}
+	
+	// TODO Kommentierung
+	@Override
+	public boolean changePersistence(IDataStorage dataStorage) {
+		// Falls das Schließen der alten Datenhaltung nicht korrekt
+		// abläuft, false zurückgeben
+		if (!this.dataStorage.closeDataStorage()) {
+			return false;
+		}
+		// ansonsten die neue Datenhaltung zuweisen
+		// und true zurückgeben
+		this.dataStorage = dataStorage ;
+		return true ;
+	}
+	
+	// TODO Kommentierung
+	private boolean checkDateDifference(String startOfLoan, String endOfLoan) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy") ;
+		Date sol = null, eol = null;
+		long diff = -1 ;
+		try {
+			sol = sdf.parse(startOfLoan);
+			eol = sdf.parse(endOfLoan) ;
+		} catch (ParseException e) {
+			return false ;
+		}	
+		diff = eol.getTime() - sol.getTime() ;
+		if ( diff < 0 ) {
+			return false ;
+		}
+		return true ;
+	}
+	
+	// TODO Kommentierung
+	@Override
+	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {		
+		if (!isDate(startOfLoan) || !isDate(endOfLoan)) {
+			return false ;
+		}
+		if (! checkDateDifference(startOfLoan, endOfLoan)) {
+			return false ;
+		}
+		if (checkBook(book)) {
+			return dataStorage.isAvailable(book, startOfLoan, endOfLoan) ;
+		}
+		return false ;
+	}
+
+	@Override
+	public List<Customer> searchCustomer(String term) {
+		List<Customer> results = dataStorage.searchCustomer(term) ;
+		if (results != null) {
+			for (Customer customer : results) {
+				customer.setLoanList(dataStorage.getLoansByCustomer(customer)) ;
+			}
+			return results ;
+		}
+		return null ;
+	}
+
+	@Override
+	public List<Book> searchBook(String term) {
+		List<Book> results = dataStorage.searchBook(term) ;
+		if (results != null) {
+			for (Book book :results) {
+				book.setLoanList(dataStorage.getLoansByBook(book)) ;
+			}
+			return results ;
+		}
+		return null ;
 	}
 }
