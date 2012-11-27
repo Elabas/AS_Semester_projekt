@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
+
 import javax.swing.JTable;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
@@ -24,9 +25,26 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.xml.bind.DataBindingException;
+
+import org.jdom2.JDOMException;
+
+import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
+import de.oszimt.gruppe3.bibliotheksverwaltung.factories.GuiDbFactory;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.DB;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
 public class GUI {
 
@@ -64,22 +82,46 @@ public class GUI {
 	private JSeparator separator_4;
 	private JSeparator separator_5;
 	private JSeparator separator_6;
+	private Logic logic;
+	private GUIActionListener actionListener;
 
 	/**
 	 * Launch the application.
+	 * @throws IOException 
+	 * @throws JDOMException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) {
-		GUI window = new GUI();
-		window.frame.setVisible(true);
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, JDOMException, IOException {
+		new GUI(new Logic(new XML(new File("Bibliotheksverwaltung\\src\\de\\oszimt\\gruppe3\\bibliotheksverwaltung\\resources\\data.xml"))));
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public GUI(Logic logic) {
+		this.logic = logic;
+		this.actionListener = GUIActionListener.getInstance(this, logic);
 		initialize();
+		frame.setVisible(true);
 	}
 
+	public void showDataBooks(List<Book> books){
+		
+	}
+	
+	public void showDataCustomer(List<Customer> customers){
+		
+	}
+	
+	public void showDataLoan(List<Loan> loans){
+		
+	}
+	
+	public void refreshTableToDefault() {
+		
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -218,6 +260,10 @@ public class GUI {
 		frame.getContentPane().add(mainTable, gbc_mainTable);
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
+
 	public JTable getMainTable() {
 		return mainTable;
 	}
@@ -305,6 +351,8 @@ public class GUI {
 	public void setMenuDatei(JMenu menuDatei) {
 		this.menuDatei = menuDatei;
 	}
+
+
 
 }
 
