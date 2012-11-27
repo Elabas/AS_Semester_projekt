@@ -292,20 +292,26 @@ public class Logic implements IBusinessLogic {
 		// ansonsten die neue Datenhaltung zuweisen
 		// und true zurückgeben
 		if( dataStorage instanceof DB) {
-			dataStorage = new XML() ;
-		}
-		else {
 			try {
-				dataStorage = new DB() ;
-			} catch (ClassNotFoundException e) {
-				return false ;
-			} catch (SQLException e) {
-				return false ;
+				dataStorage = new XML() ;
 			} catch (JDOMException e) {
 				return false ;
 			} catch (IOException e) {
 				return false ;
 			}
+		}
+		else {
+				try {
+					dataStorage = new DB() ;
+				} catch (ClassNotFoundException e) {
+					return false ;
+				} catch (SQLException e) {
+					return false ;
+				} catch (JDOMException e) {
+					return false ;
+				} catch (IOException e) {
+					return false ;
+				}
 		}
 		return true ;
 	}

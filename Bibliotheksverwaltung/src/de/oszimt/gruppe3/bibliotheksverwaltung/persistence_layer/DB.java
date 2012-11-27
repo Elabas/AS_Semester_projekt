@@ -35,9 +35,9 @@ public class DB implements IDataStorage {
 	private String statementsFile = "resources/statements.xml" ;
 	private Map<String, String> statements ;
 	
-	public DB() throws ClassNotFoundException, SQLException, JDOMException, IOException {
-		openDataStorage();
-		importStatements() ;
+	public DB() throws ClassNotFoundException, SQLException, JDOMException, IOException  {
+			openDataStorage();
+			importStatements() ;
 	}
 
 	/**
