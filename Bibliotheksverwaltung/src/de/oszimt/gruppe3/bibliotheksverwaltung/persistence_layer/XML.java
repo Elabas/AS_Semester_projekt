@@ -24,9 +24,9 @@ public class XML implements IDataStorage {
 	private Document doc;
 	private File f;
 	
-	public XML(File f) throws JDOMException, IOException{
-		this.doc = this.openFile(f);
-		this.f = f;
+	public XML() throws JDOMException, IOException{
+		this.f = new File("Bibliotheksverwaltung\\src\\de\\oszimt\\gruppe3\\bibliotheksverwaltung\\resources\\data.xml");
+		this.doc = this.openFile(this.f);
 	}
 	
 	private Document openFile(File f) throws JDOMException, IOException{

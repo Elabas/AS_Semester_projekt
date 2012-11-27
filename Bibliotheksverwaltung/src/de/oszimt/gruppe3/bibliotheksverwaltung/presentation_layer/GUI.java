@@ -93,7 +93,7 @@ public class GUI {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, JDOMException, IOException {
-		new GUI(new Logic(new XML(new File("Bibliotheksverwaltung\\src\\de\\oszimt\\gruppe3\\bibliotheksverwaltung\\resources\\data.xml"))));
+		new GUI(new Logic(new XML()));
 	}
 
 	/**
