@@ -1,14 +1,20 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.business_layer;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.jdom2.JDOMException;
+
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.DB;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
+import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
 /**
  * 
@@ -277,7 +283,7 @@ public class Logic implements IBusinessLogic {
 	
 	// TODO Kommentierung
 	@Override
-	public boolean changePersistence(IDataStorage dataStorage) {
+	public boolean changePersistence() {
 		// Falls das Schließen der alten Datenhaltung nicht korrekt
 		// abläuft, false zurückgeben
 		if (!this.dataStorage.closeDataStorage()) {
@@ -285,7 +291,22 @@ public class Logic implements IBusinessLogic {
 		}
 		// ansonsten die neue Datenhaltung zuweisen
 		// und true zurückgeben
-		this.dataStorage = dataStorage ;
+		if( dataStorage instanceof DB) {
+			dataStorage = new XML() ;
+		}
+		else {
+			try {
+				dataStorage = new DB() ;
+			} catch (ClassNotFoundException e) {
+				return false ;
+			} catch (SQLException e) {
+				return false ;
+			} catch (JDOMException e) {
+				return false ;
+			} catch (IOException e) {
+				return false ;
+			}
+		}
 		return true ;
 	}
 	

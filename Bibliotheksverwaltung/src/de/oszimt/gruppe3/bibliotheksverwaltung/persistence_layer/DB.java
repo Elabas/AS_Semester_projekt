@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -31,8 +29,6 @@ public class DB implements IDataStorage {
 
 	private static Connection connection;
 	private PreparedStatement sqlInterface;
-	// private String file =
-	// "F:/Tim/Tim/EclipseWorkspace/AS_Semester_projekt/db/BibliothekDB";
 	private String file = "db/BibliothekDB";
 	private String user = "user";
 	private String pass = "pass";

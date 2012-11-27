@@ -33,7 +33,7 @@ public interface IBusinessLogic {
 	public int getCustomerCount() ;
 	public int getLoanCount() ;
 	public void finish() ;
-	public boolean changePersistence(IDataStorage dataStorage) ;
+	public boolean changePersistence() ;
 	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) ;
 	public List<Customer> searchCustomer(String term) ;
 	public List<Book> searchBook(String term) ;
