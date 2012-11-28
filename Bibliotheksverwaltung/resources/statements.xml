@@ -8,6 +8,9 @@
 	<statement id="deleteLoan">DELETE FROM T_Loans WHERE p_loan_id = ?</statement>
 	<statement id="getBookCount">SELECT count(p_isbn) FROM T_Books</statement>
 	<statement id="getCustomerCount">SELECT count(p_customer_id) FROM T_Customers</statement>
+	<statement id="getBooks">SELECT * FROM T_Books ORDER BY title</statement>
+	<statement id="getCustomers">SELECT * FROM T_Customers ORDER BY surname</statement>
+	<statement id="getLoans">SELECT * FROM T_Loans</statement>
 	<statement id="getLoanCount">SELECT count(p_loan_id) FROM T_Loans</statement>
 	<statement id="getLoansByBook">SELECT p_loan_id,f_customer_id,startOfLoan,endOfLoan FROM T_Loans WHERE f_isbn= ? ORDER BY p_loan_id</statement>
 	<statement id="getLoansByCustomer">SELECT p_loan_id,f_isbn,startOfLoan,endOfLoan FROM T_Loans WHERE f_customer_id = ? ORDER BY p_loan_id</statement>
