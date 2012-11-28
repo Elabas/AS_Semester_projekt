@@ -164,64 +164,77 @@ public class GUI {
 		menuBar.add(menuDatei);
 		
 		menuItemDatenbank = new JMenuItem("Datenbank Benutzen");
+		menuItemDatenbank.addActionListener(actionListener);
 		menuDatei.add(menuItemDatenbank);
 		
 		menuItemXML = new JMenuItem("XML Benutzen");
+		menuItemXML.addActionListener(actionListener);
 		menuDatei.add(menuItemXML);
 		
 		separator = new JSeparator();
 		menuDatei.add(separator);
 		
 		menuItemBeenden = new JMenuItem("Beenden");
+		menuItemBeenden.addActionListener(actionListener);
 		menuDatei.add(menuItemBeenden);
 		
 		menuKunden = new JMenu("Kunden");
 		menuBar.add(menuKunden);
 		
 		menuItemKundeErstellen = new JMenuItem("Kunde Erstellen");
+		menuItemKundeErstellen.addActionListener(actionListener);
 		menuKunden.add(menuItemKundeErstellen);
 		
 		menuItemKundeSuchen = new JMenuItem("Kunde Suchen");
+		menuItemKundeSuchen.addActionListener(actionListener);
 		menuKunden.add(menuItemKundeSuchen);
 		
 		separator_1 = new JSeparator();
 		menuKunden.add(separator_1);
 		
 		menuItemKundeBearbeiten = new JMenuItem("Kunde Bearbeiten");
+		menuItemKundeBearbeiten.addActionListener(actionListener);
 		menuKunden.add(menuItemKundeBearbeiten);
 		
-		menuItemKundeL�schen = new JMenuItem("Kunde L\u00F6schen");
-		menuKunden.add(menuItemKundeL�schen);
+		menuItemKundeLöschen = new JMenuItem("Kunde L\u00F6schen");
+		menuItemKundeLöschen.addActionListener(actionListener);
+		menuKunden.add(menuItemKundeLöschen);
 		
 		separator_2 = new JSeparator();
 		menuKunden.add(separator_2);
 		
-		menuItemAusleihF�rKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuKunden.add(menuItemAusleihF�rKunde);
+		menuItemAusleihFürKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuItemAusleihFürKunde.addActionListener(actionListener);
+		menuKunden.add(menuItemAusleihFürKunde);
 		
-		menuB�cher = new JMenu("B\u00FCcher");
-		menuBar.add(menuB�cher);
+		menuBücher = new JMenu("B\u00FCcher");
+		menuBar.add(menuBücher);
 		
 		menuItemBuchErstellen = new JMenuItem("Buch Erstellen");
-		menuB�cher.add(menuItemBuchErstellen);
+		menuItemBuchErstellen.addActionListener(actionListener);
+		menuBücher.add(menuItemBuchErstellen);
 		
 		menuItemBuchSuchen = new JMenuItem("Buch Suchen");
-		menuB�cher.add(menuItemBuchSuchen);
+		menuItemBuchSuchen.addActionListener(actionListener);
+		menuBücher.add(menuItemBuchSuchen);
 		
 		separator_3 = new JSeparator();
-		menuB�cher.add(separator_3);
+		menuBücher.add(separator_3);
 		
 		menuItemBuchBearbeiten = new JMenuItem("Buch Bearbeiten");
-		menuB�cher.add(menuItemBuchBearbeiten);
+		menuItemBuchBearbeiten.addActionListener(actionListener);
+		menuBücher.add(menuItemBuchBearbeiten);
 		
-		menuItemBuchL�schen = new JMenuItem("Buch L\u00F6schen");
-		menuB�cher.add(menuItemBuchL�schen);
+		menuItemBuchLöschen = new JMenuItem("Buch L\u00F6schen");
+		menuItemBuchLöschen.addActionListener(actionListener);
+		menuBücher.add(menuItemBuchLöschen);
 		
 		separator_4 = new JSeparator();
-		menuB�cher.add(separator_4);
+		menuBücher.add(separator_4);
 		
-		menuItemAusleihF�rBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuB�cher.add(menuItemAusleihF�rBuch);
+		menuItemAusleihFürBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuItemAusleihFürBuch.addActionListener(actionListener);
+		menuBücher.add(menuItemAusleihFürBuch);
 		
 		menuLeihen = new JMenu("Leihen");
 		menuBar.add(menuLeihen);
@@ -264,27 +277,32 @@ public class GUI {
 		textFeldSuche.setColumns(10);
 		
 		btnKundenSuche = new JButton("Kunden");
+		btnKundenSuche.addActionListener(actionListener);
 		GridBagConstraints gbc_btnKundenSuche = new GridBagConstraints();
 		gbc_btnKundenSuche.insets = new Insets(0, 0, 5, 5);
 		gbc_btnKundenSuche.gridx = 9;
 		gbc_btnKundenSuche.gridy = 1;
 		frame.getContentPane().add(btnKundenSuche, gbc_btnKundenSuche);
 		
-		btnB�cherSuche = new JButton("B\u00FCcher");
-		GridBagConstraints gbc_btnB�cherSuche = new GridBagConstraints();
-		gbc_btnB�cherSuche.insets = new Insets(0, 0, 5, 0);
-		gbc_btnB�cherSuche.gridx = 10;
-		gbc_btnB�cherSuche.gridy = 1;
-		frame.getContentPane().add(btnB�cherSuche, gbc_btnB�cherSuche);
+		btnBücherSuche = new JButton("B\u00FCcher");
+		btnBücherSuche.addActionListener(actionListener);
+		GridBagConstraints gbc_btnBücherSuche = new GridBagConstraints();
+		gbc_btnBücherSuche.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBücherSuche.gridx = 10;
+		gbc_btnBücherSuche.gridy = 1;
+		frame.getContentPane().add(btnBücherSuche, gbc_btnBücherSuche);
 		
 		mainTable = new JTable();
+		JScrollPane pane = new JScrollPane();
+		mainTable.setModel(new DefaultTableModel());
 		GridBagConstraints gbc_mainTable = new GridBagConstraints();
 		gbc_mainTable.gridwidth = 11;
 		gbc_mainTable.insets = new Insets(0, 0, 0, 5);
 		gbc_mainTable.fill = GridBagConstraints.BOTH;
 		gbc_mainTable.gridx = 0;
 		gbc_mainTable.gridy = 2;
-		frame.getContentPane().add(mainTable, gbc_mainTable);
+		pane.setViewportView(mainTable);
+		frame.getContentPane().add(pane, gbc_mainTable);
 	}
 
 	public JFrame getFrame() {
