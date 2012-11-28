@@ -50,12 +50,12 @@ public class GUI {
 
 	private JFrame frame;
 	private JTextField textFeldSuche;
-	private JButton btnBücherSuche;
+	private JButton btnBï¿½cherSuche;
 	private JButton btnKundenSuche;
 	private JTable mainTable;
 	private JMenu menuDatei;
 	private JMenu menuKunden;
-	private JMenu menuBücher;
+	private JMenu menuBï¿½cher;
 	private JMenu menuLeihen;
 	private JMenuItem menuItemDatenbank;
 	private JMenuItem menuItemXML;
@@ -64,13 +64,13 @@ public class GUI {
 	private JMenuItem menuItemKundeErstellen;
 	private JMenuItem menuItemKundeBearbeiten;
 	private JMenuItem menuItemKundeSuchen;
-	private JMenuItem menuItemKundeLöschen;
-	private JMenuItem menuItemAusleihFürKunde;
+	private JMenuItem menuItemKundeLï¿½schen;
+	private JMenuItem menuItemAusleihFï¿½rKunde;
 	private JMenuItem menuItemBuchErstellen;
 	private JMenuItem menuItemBuchSuchen;
 	private JMenuItem menuItemBuchBearbeiten;
-	private JMenuItem menuItemBuchLöschen;
-	private JMenuItem menuItemAusleihFürBuch;
+	private JMenuItem menuItemBuchLï¿½schen;
+	private JMenuItem menuItemAusleihFï¿½rBuch;
 	private JMenuItem menuItem_5;
 	private JMenuItem menuItem_6;
 	private JMenuItem menuItem_7;
@@ -107,20 +107,47 @@ public class GUI {
 	}
 
 	public void showDataBooks(List<Book> books){
-		
+		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
+		dftm.setColumnIdentifiers(new String[]{"ISBN","Titel","Autor","Preis"});
+		clearTable(dftm);
+		for (Book book : books) {
+			dftm.addRow(new Object[]{book.getIsbn(),book.getTitle(),book.getAuthor(),book.getPrice()});
+		}
 	}
 	
 	public void showDataCustomer(List<Customer> customers){
+		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
+		dftm.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","AusleihvorgÃ¤nge"});
+		clearTable(dftm);
+		
+		for (Customer customer : customers) {
+			dftm.addRow(new Object[]{customer.getCustomerID(),customer.getName(),customer.getSurname(),customer.getAddress(),customer.getLoanList().size()});
+		}
+		
 		
 	}
 	
 	public void showDataLoan(List<Loan> loans){
+		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
+		dftm.setColumnIdentifiers(new String[]{"Buch Titel","Buch Isbn","Kunden Nr.","Kunde Vorname","Kunden Nachname"," Ausgeliehen am","Ausgelihen bis"});
+		clearTable(dftm);
 		
+		for (Loan loan : loans) {
+			dftm.addRow(new Object[]{loan.getBook().getTitle(),loan.getBook().getIsbn(),loan.getCostumer().getCustomerID(),loan.getCostumer().getName(),loan.getCostumer().getSurname(),loan.getStartOfLoan(),loan.getEndOfLoan()});
+		}	
+	}
+	
+	private void clearTable(DefaultTableModel dftm){
+		for (int i = dftm.getRowCount()-1; i >= 0; i--) {
+			dftm.removeRow(i);
+		}
 	}
 	
 	public void refreshTableToDefault() {
-		
+		List<Customer> customers = logic.getCustomers();
+		showDataCustomer(customers);
 	}
+	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -163,38 +190,38 @@ public class GUI {
 		menuItemKundeBearbeiten = new JMenuItem("Kunde Bearbeiten");
 		menuKunden.add(menuItemKundeBearbeiten);
 		
-		menuItemKundeLöschen = new JMenuItem("Kunde L\u00F6schen");
-		menuKunden.add(menuItemKundeLöschen);
+		menuItemKundeLï¿½schen = new JMenuItem("Kunde L\u00F6schen");
+		menuKunden.add(menuItemKundeLï¿½schen);
 		
 		separator_2 = new JSeparator();
 		menuKunden.add(separator_2);
 		
-		menuItemAusleihFürKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuKunden.add(menuItemAusleihFürKunde);
+		menuItemAusleihFï¿½rKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuKunden.add(menuItemAusleihFï¿½rKunde);
 		
-		menuBücher = new JMenu("B\u00FCcher");
-		menuBar.add(menuBücher);
+		menuBï¿½cher = new JMenu("B\u00FCcher");
+		menuBar.add(menuBï¿½cher);
 		
 		menuItemBuchErstellen = new JMenuItem("Buch Erstellen");
-		menuBücher.add(menuItemBuchErstellen);
+		menuBï¿½cher.add(menuItemBuchErstellen);
 		
 		menuItemBuchSuchen = new JMenuItem("Buch Suchen");
-		menuBücher.add(menuItemBuchSuchen);
+		menuBï¿½cher.add(menuItemBuchSuchen);
 		
 		separator_3 = new JSeparator();
-		menuBücher.add(separator_3);
+		menuBï¿½cher.add(separator_3);
 		
 		menuItemBuchBearbeiten = new JMenuItem("Buch Bearbeiten");
-		menuBücher.add(menuItemBuchBearbeiten);
+		menuBï¿½cher.add(menuItemBuchBearbeiten);
 		
-		menuItemBuchLöschen = new JMenuItem("Buch L\u00F6schen");
-		menuBücher.add(menuItemBuchLöschen);
+		menuItemBuchLï¿½schen = new JMenuItem("Buch L\u00F6schen");
+		menuBï¿½cher.add(menuItemBuchLï¿½schen);
 		
 		separator_4 = new JSeparator();
-		menuBücher.add(separator_4);
+		menuBï¿½cher.add(separator_4);
 		
-		menuItemAusleihFürBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuBücher.add(menuItemAusleihFürBuch);
+		menuItemAusleihFï¿½rBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuBï¿½cher.add(menuItemAusleihFï¿½rBuch);
 		
 		menuLeihen = new JMenu("Leihen");
 		menuBar.add(menuLeihen);
@@ -243,12 +270,12 @@ public class GUI {
 		gbc_btnKundenSuche.gridy = 1;
 		frame.getContentPane().add(btnKundenSuche, gbc_btnKundenSuche);
 		
-		btnBücherSuche = new JButton("B\u00FCcher");
-		GridBagConstraints gbc_btnBücherSuche = new GridBagConstraints();
-		gbc_btnBücherSuche.insets = new Insets(0, 0, 5, 0);
-		gbc_btnBücherSuche.gridx = 10;
-		gbc_btnBücherSuche.gridy = 1;
-		frame.getContentPane().add(btnBücherSuche, gbc_btnBücherSuche);
+		btnBï¿½cherSuche = new JButton("B\u00FCcher");
+		GridBagConstraints gbc_btnBï¿½cherSuche = new GridBagConstraints();
+		gbc_btnBï¿½cherSuche.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBï¿½cherSuche.gridx = 10;
+		gbc_btnBï¿½cherSuche.gridy = 1;
+		frame.getContentPane().add(btnBï¿½cherSuche, gbc_btnBï¿½cherSuche);
 		
 		mainTable = new JTable();
 		GridBagConstraints gbc_mainTable = new GridBagConstraints();
@@ -276,8 +303,8 @@ public class GUI {
 		return textFeldSuche;
 	}
 
-	public JButton getBtnBücherSuche() {
-		return btnBücherSuche;
+	public JButton getBtnBï¿½cherSuche() {
+		return btnBï¿½cherSuche;
 	}
 
 	public JButton getBtnKundenSuche() {
@@ -288,8 +315,8 @@ public class GUI {
 		return menuKunden;
 	}
 
-	public JMenu getMenuBücher() {
-		return menuBücher;
+	public JMenu getMenuBï¿½cher() {
+		return menuBï¿½cher;
 	}
 
 	public JMenu getMenuLeihen() {
@@ -320,12 +347,12 @@ public class GUI {
 		return menuItemKundeSuchen;
 	}
 
-	public JMenuItem getMenuItemKundeLöschen() {
-		return menuItemKundeLöschen;
+	public JMenuItem getMenuItemKundeLï¿½schen() {
+		return menuItemKundeLï¿½schen;
 	}
 
-	public JMenuItem getMenuItemAusleihFürKunde() {
-		return menuItemAusleihFürKunde;
+	public JMenuItem getMenuItemAusleihFï¿½rKunde() {
+		return menuItemAusleihFï¿½rKunde;
 	}
 
 	public JMenuItem getMenuItemBuchErstellen() {
@@ -340,12 +367,12 @@ public class GUI {
 		return menuItemBuchBearbeiten;
 	}
 
-	public JMenuItem getMenuItemBuchLöschen() {
-		return menuItemBuchLöschen;
+	public JMenuItem getMenuItemBuchLï¿½schen() {
+		return menuItemBuchLï¿½schen;
 	}
 
-	public JMenuItem getMenuItemAusleihFürBuch() {
-		return menuItemAusleihFürBuch;
+	public JMenuItem getMenuItemAusleihFï¿½rBuch() {
+		return menuItemAusleihFï¿½rBuch;
 	}
 
 	public void setMenuDatei(JMenu menuDatei) {
