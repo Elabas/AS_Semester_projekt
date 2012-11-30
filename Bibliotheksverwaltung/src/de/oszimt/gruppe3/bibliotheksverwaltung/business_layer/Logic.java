@@ -17,8 +17,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
 /**
- * Datei: Logic.java 
- * Aufgabe: Fachkonzept des Programms, regelt Anfragen an die
+ * Datei: Logic.java Aufgabe: Fachkonzept des Programms, regelt Anfragen an die
  * Datenhaltung und gibt ausgelesene Daten an die Oberfläche weiter
  * 
  * @author Tim Müller, FA03
