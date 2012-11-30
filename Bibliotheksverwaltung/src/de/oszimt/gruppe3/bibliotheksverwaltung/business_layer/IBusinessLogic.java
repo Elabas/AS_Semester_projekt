@@ -8,7 +8,8 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 
 /**
- * Datei: IBusinessLogic.java Aufgabe: Interface für das Fachkonzept
+ * Datei: IBusinessLogic.java 
+ * Aufgabe: Interface für das Fachkonzept
  * 
  * @author Tim Müller
  * @version 1.6 vom 28.11.2012

@@ -10,17 +10,27 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.IUserInterface
 import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.TUI;
 
 /**
+ * Datei: TuiXmlFactory.java
+ * Aufgabe: Fabrik zur Erzeugung einer Konsolenanwendung mit XML-Datei
  * 
  * @author Tim Müller
  * @version 1.0
  */
 public class TuiXmlFactory implements ILibrary {
 
+	/**
+	 * @since 1.0
+	 * @return eine neue Konsolenanwendung
+	 */
 	@Override
 	public IUserInterface createUserInterface() {
 		return new TUI();
 	}
 
+	/**
+	 * @since 1.0
+	 * @return eine neue XML-Schnittstelle
+	 */
 	@Override
 	public IDataStorage createDataStorage() {
 		try {
