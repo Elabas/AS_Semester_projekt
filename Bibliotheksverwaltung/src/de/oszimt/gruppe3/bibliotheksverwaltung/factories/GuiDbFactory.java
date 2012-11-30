@@ -11,8 +11,8 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.GUI;
 import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.IUserInterface;
 
 /**
- * Datei: GuiDbFactory.java
- * Aufgabe: Fabrik zur Erzeugung einer grafischen Benutzeroberfläche mit Datenbank
+ * Datei: GuiDbFactory.java Aufgabe: Fabrik zur Erzeugung einer grafischen
+ * Benutzeroberfläche mit Datenbank
  * 
  * @author Tim Müller
  * @version 1.0

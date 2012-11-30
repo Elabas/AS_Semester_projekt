@@ -14,8 +14,8 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.IUserInterface
 import de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer.TUI;
 
 /**
- * Datei: TuiDbFactory.java
- * Aufgabe: Fabrik zur Erzeugung einer Konsolenanwendung mit Datenbank
+ * Datei: TuiDbFactory.java Aufgabe: Fabrik zur Erzeugung einer
+ * Konsolenanwendung mit Datenbank
  * 
  * @author Tim Müller
  * @version 1.0
