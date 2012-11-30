@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.jdom2.JDOMException;
 
+import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.DB;
@@ -16,15 +17,15 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
 public class GUIActionListener implements ActionListener {
 	 private GUI gui;
+	private IBusinessLogic logic;
 	private static GUIActionListener instance;
-	private Logic logic;
 	
-	 private  GUIActionListener(GUI gui, Logic logic){
-		 this.gui = gui;
+	 private  GUIActionListener(GUI gui, IBusinessLogic logic){
 		 this.logic = logic;
+		 this.gui = gui;
 	 }
 	 
-	 public static GUIActionListener getInstance(GUI gui, Logic logic){
+	 public static GUIActionListener getInstance(GUI gui, IBusinessLogic logic){
 		 if(instance == null)
 			 instance = new GUIActionListener(gui,logic);
 		 return instance;
@@ -32,7 +33,7 @@ public class GUIActionListener implements ActionListener {
 	 
 	 @Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(gui.getBtnBücherSuche()))
+		if(e.getSource().equals(gui.getBtnBuecherSuche()))
 				searchBooks();
 		else if(e.getSource().equals(gui.getBtnKundenSuche()))
 				searchCustomer();
@@ -50,17 +51,18 @@ public class GUIActionListener implements ActionListener {
 	private void createCustomer() {
 		
 		
-		Customer customer = new Customer(name, surname, address);
-		logic.saveCustomer(customer);
+//		Customer customer = new Customer(name, surname, address);
+//		logic.saveCustomer(customer);
 	}
 
+	
 	private void closeAplication() {
 		logic.finish();
 		System.exit(0);
 	}
 
 	private void changeToDatabase() {
-		if(!	logic.changePersistence(){
+		if(!logic.changePersistence()){
 			new JOptionPane("Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten.", JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
 			return;
 		}else{
@@ -69,7 +71,7 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void changeToXML() {
-		if(!	logic.changePersistence(){
+		if(!logic.changePersistence()){
 			new JOptionPane("Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten.", JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
 			return;
 		}else{
