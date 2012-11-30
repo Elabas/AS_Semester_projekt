@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 
@@ -33,10 +34,12 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.DataBindingException;
 
 import org.jdom2.JDOMException;
 
+import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.factories.GuiDbFactory;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
@@ -46,16 +49,16 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.DB;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
 import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
-public class GUI {
+public class GUI implements IUserInterface {
 
 	private JFrame frame;
 	private JTextField textFeldSuche;
-	private JButton btnB�cherSuche;
+	private JButton btnBuecherSuche;
 	private JButton btnKundenSuche;
 	private JTable mainTable;
 	private JMenu menuDatei;
 	private JMenu menuKunden;
-	private JMenu menuB�cher;
+	private JMenu menuBuecher;
 	private JMenu menuLeihen;
 	private JMenuItem menuItemDatenbank;
 	private JMenuItem menuItemXML;
@@ -64,13 +67,13 @@ public class GUI {
 	private JMenuItem menuItemKundeErstellen;
 	private JMenuItem menuItemKundeBearbeiten;
 	private JMenuItem menuItemKundeSuchen;
-	private JMenuItem menuItemKundeL�schen;
-	private JMenuItem menuItemAusleihF�rKunde;
+	private JMenuItem menuItemKundeLoeschen;
+	private JMenuItem menuItemAusleihFuerKunde;
 	private JMenuItem menuItemBuchErstellen;
 	private JMenuItem menuItemBuchSuchen;
 	private JMenuItem menuItemBuchBearbeiten;
-	private JMenuItem menuItemBuchL�schen;
-	private JMenuItem menuItemAusleihF�rBuch;
+	private JMenuItem menuItemBuchLoeschen;
+	private JMenuItem menuItemAusleihFuerBuch;
 	private JMenuItem menuItem_5;
 	private JMenuItem menuItem_6;
 	private JMenuItem menuItem_7;
@@ -82,7 +85,7 @@ public class GUI {
 	private JSeparator separator_4;
 	private JSeparator separator_5;
 	private JSeparator separator_6;
-	private Logic logic;
+	private IBusinessLogic logic;
 	private GUIActionListener actionListener;
 
 	/**
@@ -92,18 +95,19 @@ public class GUI {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, JDOMException, IOException {
-		new GUI(new Logic(new XML()));
+	public static void main(String[] args)  {
+		new GUI();
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public GUI(Logic logic) {
-		this.logic = logic;
-		this.actionListener = GUIActionListener.getInstance(this, logic);
+	public GUI() {
 		initialize();
-		frame.setVisible(true);
+	}
+
+	public IBusinessLogic getLogic() {
+		return logic;
 	}
 
 	public void showDataBooks(List<Book> books){
@@ -117,7 +121,7 @@ public class GUI {
 	
 	public void showDataCustomer(List<Customer> customers){
 		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
-		dftm.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","Ausleihvorgänge"});
+		dftm.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","AusleihvorgÃ¤nge"});
 		clearTable(dftm);
 		
 		for (Customer customer : customers) {
@@ -196,45 +200,45 @@ public class GUI {
 		menuItemKundeBearbeiten.addActionListener(actionListener);
 		menuKunden.add(menuItemKundeBearbeiten);
 		
-		menuItemKundeLöschen = new JMenuItem("Kunde L\u00F6schen");
-		menuItemKundeLöschen.addActionListener(actionListener);
-		menuKunden.add(menuItemKundeLöschen);
+		menuItemKundeLoeschen = new JMenuItem("Kunde L\u00F6schen");
+		menuItemKundeLoeschen.addActionListener(actionListener);
+		menuKunden.add(menuItemKundeLoeschen);
 		
 		separator_2 = new JSeparator();
 		menuKunden.add(separator_2);
 		
-		menuItemAusleihFürKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuItemAusleihFürKunde.addActionListener(actionListener);
-		menuKunden.add(menuItemAusleihFürKunde);
+		menuItemAusleihFuerKunde = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuItemAusleihFuerKunde.addActionListener(actionListener);
+		menuKunden.add(menuItemAusleihFuerKunde);
 		
-		menuBücher = new JMenu("B\u00FCcher");
-		menuBar.add(menuBücher);
+		menuBuecher = new JMenu("B\u00FCcher");
+		menuBar.add(menuBuecher);
 		
 		menuItemBuchErstellen = new JMenuItem("Buch Erstellen");
 		menuItemBuchErstellen.addActionListener(actionListener);
-		menuBücher.add(menuItemBuchErstellen);
+		menuBuecher.add(menuItemBuchErstellen);
 		
 		menuItemBuchSuchen = new JMenuItem("Buch Suchen");
 		menuItemBuchSuchen.addActionListener(actionListener);
-		menuBücher.add(menuItemBuchSuchen);
+		menuBuecher.add(menuItemBuchSuchen);
 		
 		separator_3 = new JSeparator();
-		menuBücher.add(separator_3);
+		menuBuecher.add(separator_3);
 		
 		menuItemBuchBearbeiten = new JMenuItem("Buch Bearbeiten");
 		menuItemBuchBearbeiten.addActionListener(actionListener);
-		menuBücher.add(menuItemBuchBearbeiten);
+		menuBuecher.add(menuItemBuchBearbeiten);
 		
-		menuItemBuchLöschen = new JMenuItem("Buch L\u00F6schen");
-		menuItemBuchLöschen.addActionListener(actionListener);
-		menuBücher.add(menuItemBuchLöschen);
+		menuItemBuchLoeschen = new JMenuItem("Buch L\u00F6schen");
+		menuItemBuchLoeschen.addActionListener(actionListener);
+		menuBuecher.add(menuItemBuchLoeschen);
 		
 		separator_4 = new JSeparator();
-		menuBücher.add(separator_4);
+		menuBuecher.add(separator_4);
 		
-		menuItemAusleihFürBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
-		menuItemAusleihFürBuch.addActionListener(actionListener);
-		menuBücher.add(menuItemAusleihFürBuch);
+		menuItemAusleihFuerBuch = new JMenuItem("Ausleihvorg\u00E4nge anzeigen");
+		menuItemAusleihFuerBuch.addActionListener(actionListener);
+		menuBuecher.add(menuItemAusleihFuerBuch);
 		
 		menuLeihen = new JMenu("Leihen");
 		menuBar.add(menuLeihen);
@@ -284,13 +288,13 @@ public class GUI {
 		gbc_btnKundenSuche.gridy = 1;
 		frame.getContentPane().add(btnKundenSuche, gbc_btnKundenSuche);
 		
-		btnBücherSuche = new JButton("B\u00FCcher");
-		btnBücherSuche.addActionListener(actionListener);
-		GridBagConstraints gbc_btnBücherSuche = new GridBagConstraints();
-		gbc_btnBücherSuche.insets = new Insets(0, 0, 5, 0);
-		gbc_btnBücherSuche.gridx = 10;
-		gbc_btnBücherSuche.gridy = 1;
-		frame.getContentPane().add(btnBücherSuche, gbc_btnBücherSuche);
+		btnBuecherSuche = new JButton("B\u00FCcher");
+		btnBuecherSuche.addActionListener(actionListener);
+		GridBagConstraints gbc_btnBuecherSuche = new GridBagConstraints();
+		gbc_btnBuecherSuche.insets = new Insets(0, 0, 5, 0);
+		gbc_btnBuecherSuche.gridx = 10;
+		gbc_btnBuecherSuche.gridy = 1;
+		frame.getContentPane().add(btnBuecherSuche, gbc_btnBuecherSuche);
 		
 		mainTable = new JTable();
 		JScrollPane pane = new JScrollPane();
@@ -321,8 +325,8 @@ public class GUI {
 		return textFeldSuche;
 	}
 
-	public JButton getBtnB�cherSuche() {
-		return btnB�cherSuche;
+	public JButton getBtnBuecherSuche() {
+		return btnBuecherSuche;
 	}
 
 	public JButton getBtnKundenSuche() {
@@ -333,8 +337,8 @@ public class GUI {
 		return menuKunden;
 	}
 
-	public JMenu getMenuB�cher() {
-		return menuB�cher;
+	public JMenu getMenuBuecher() {
+		return menuBuecher;
 	}
 
 	public JMenu getMenuLeihen() {
@@ -365,12 +369,12 @@ public class GUI {
 		return menuItemKundeSuchen;
 	}
 
-	public JMenuItem getMenuItemKundeL�schen() {
-		return menuItemKundeL�schen;
+	public JMenuItem getMenuItemKundeLueschen() {
+		return menuItemKundeLoeschen;
 	}
 
-	public JMenuItem getMenuItemAusleihF�rKunde() {
-		return menuItemAusleihF�rKunde;
+	public JMenuItem getMenuItemAusleihFuerKunde() {
+		return menuItemAusleihFuerKunde;
 	}
 
 	public JMenuItem getMenuItemBuchErstellen() {
@@ -385,16 +389,28 @@ public class GUI {
 		return menuItemBuchBearbeiten;
 	}
 
-	public JMenuItem getMenuItemBuchL�schen() {
-		return menuItemBuchL�schen;
+	public JMenuItem getMenuItemBuchLueschen() {
+		return menuItemBuchLoeschen;
 	}
 
-	public JMenuItem getMenuItemAusleihF�rBuch() {
-		return menuItemAusleihF�rBuch;
+	public JMenuItem getMenuItemAusleihFuerBuch() {
+		return menuItemAusleihFuerBuch;
 	}
 
 	public void setMenuDatei(JMenu menuDatei) {
 		this.menuDatei = menuDatei;
+	}
+
+	@Override
+	public void setLogic(IBusinessLogic logic) {
+		this.logic = logic;
+		
+	}
+
+	@Override
+	public void start() {
+		this.actionListener = GUIActionListener.getInstance(this,logic);
+		frame.setVisible(true);
 	}
 
 
