@@ -416,5 +416,23 @@ public class XML implements IDataStorage {
 		return null;
 	}
 
+	@Override
+	public List<Book> getBooks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Customer> getCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Loan> getLoans() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

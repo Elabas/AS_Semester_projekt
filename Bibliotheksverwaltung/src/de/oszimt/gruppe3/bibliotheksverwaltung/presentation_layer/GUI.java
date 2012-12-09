@@ -74,10 +74,10 @@ public class GUI implements IUserInterface {
 	private JMenuItem menuItemBuchBearbeiten;
 	private JMenuItem menuItemBuchLoeschen;
 	private JMenuItem menuItemAusleihFuerBuch;
-	private JMenuItem menuItem_5;
-	private JMenuItem menuItem_6;
-	private JMenuItem menuItem_7;
-	private JMenuItem menuItem_8;
+	private JMenuItem menuItemLoanLoeschen;
+	private JMenuItem menuItemLoanBearbeiten;
+	private JMenuItem menuItemKundeFuerLoan;
+	private JMenuItem menuItemBuchFuerLoan;
 	private JMenuItem menuItem_9;
 	private JSeparator separator_1;
 	private JSeparator separator_2;
@@ -121,7 +121,7 @@ public class GUI implements IUserInterface {
 	
 	public void showDataCustomer(List<Customer> customers){
 		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
-		dftm.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","AusleihvorgÃƒÂ¤nge"});
+		dftm.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","Ausleihvorgänge"});
 		clearTable(dftm);
 		
 		for (Customer customer : customers) {
@@ -133,11 +133,11 @@ public class GUI implements IUserInterface {
 	
 	public void showDataLoan(List<Loan> loans){
 		DefaultTableModel dftm = (DefaultTableModel) mainTable.getModel();
-		dftm.setColumnIdentifiers(new String[]{"Buch Titel","Buch Isbn","Kunden Nr.","Kunde Vorname","Kunden Nachname"," Ausgeliehen am","Ausgelihen bis"});
+		dftm.setColumnIdentifiers(new String[]{"Ausleih Nr.","Buch Titel","Buch Isbn","Kunden Nr.","Kunde Vorname","Kunden Nachname"," Ausgeliehen am","Ausgelihen bis"});
 		clearTable(dftm);
 		
 		for (Loan loan : loans) {
-			dftm.addRow(new Object[]{loan.getBook().getTitle(),loan.getBook().getIsbn(),loan.getCostumer().getCustomerID(),loan.getCostumer().getName(),loan.getCostumer().getSurname(),loan.getStartOfLoan(),loan.getEndOfLoan()});
+			dftm.addRow(new Object[]{loan.getLoanID(),loan.getBook().getTitle(),loan.getBook().getIsbn(),loan.getCostumer().getCustomerID(),loan.getCostumer().getName(),loan.getCostumer().getSurname(),loan.getStartOfLoan(),loan.getEndOfLoan()});
 		}	
 	}
 	
@@ -243,20 +243,20 @@ public class GUI implements IUserInterface {
 		menuLeihen = new JMenu("Leihen");
 		menuBar.add(menuLeihen);
 		
-		menuItem_5 = new JMenuItem("Kunde Erstellen");
-		menuLeihen.add(menuItem_5);
+		menuItemLoanLoeschen = new JMenuItem("Ausleihvorgang Löschen");
+		menuLeihen.add(menuItemLoanLoeschen);
 		
-		menuItem_6 = new JMenuItem("Kunde Suchen");
-		menuLeihen.add(menuItem_6);
+		menuItemLoanBearbeiten = new JMenuItem("Ausleihvorgang Bearbeiten");
+		menuLeihen.add(menuItemLoanBearbeiten);
 		
 		separator_5 = new JSeparator();
 		menuLeihen.add(separator_5);
 		
-		menuItem_7 = new JMenuItem("Kunde Bearbeiten");
-		menuLeihen.add(menuItem_7);
+		menuItemKundeFuerLoan = new JMenuItem("Kunde Für Ausleihvorgang");
+		menuLeihen.add(menuItemKundeFuerLoan);
 		
-		menuItem_8 = new JMenuItem("Kunde L\u00F6schen");
-		menuLeihen.add(menuItem_8);
+		menuItemBuchFuerLoan = new JMenuItem("Buch für Ausleihvorgang");
+		menuLeihen.add(menuItemBuchFuerLoan);
 		
 		separator_6 = new JSeparator();
 		menuLeihen.add(separator_6);
@@ -397,9 +397,27 @@ public class GUI implements IUserInterface {
 		return menuItemAusleihFuerBuch;
 	}
 
+	public JMenuItem getMenuItemLoanLoeschen() {
+		return menuItemLoanLoeschen;
+	}
+
+	public JMenuItem getMenuItemLoanBearbeiten() {
+		return menuItemLoanBearbeiten;
+	}
+
+	public JMenuItem getMenuItemKundeFuerLoan() {
+		return menuItemKundeFuerLoan;
+	}
+
+	public JMenuItem getMenuItemBuchFuerLoan() {
+		return menuItemBuchFuerLoan;
+	}
+
 	public void setMenuDatei(JMenu menuDatei) {
 		this.menuDatei = menuDatei;
 	}
+	
+	
 
 	@Override
 	public void setLogic(IBusinessLogic logic) {
@@ -411,6 +429,28 @@ public class GUI implements IUserInterface {
 	public void start() {
 		this.actionListener = GUIActionListener.getInstance(this,logic);
 		frame.setVisible(true);
+		refreshTableToDefault();
+	}
+
+	public Customer getSelectetCustomer() {
+		int row = mainTable.getSelectedRow();
+		int customerID = Integer.parseInt( (String) mainTable.getValueAt(row, 0));
+		Customer customer =  logic.readCustomer(customerID);
+		return customer;
+	}
+
+	public Book getSelectetBook() {
+		int row = mainTable.getSelectedRow();
+		String isbn =(String) mainTable.getValueAt(row, 0);
+		Book book = logic.readBook(isbn);
+		return book;
+	}
+
+	public Loan getSelectetLoan() {
+		int row = mainTable.getSelectedRow();
+		int loanId = Integer.parseInt((String)mainTable.getValueAt(row, 0));
+		Loan loan = logic.readLoan(loanId);
+		return loan;
 	}
 
 
