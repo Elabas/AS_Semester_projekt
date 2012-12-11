@@ -1,53 +1,33 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-
-import javax.swing.JTable;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.bind.DataBindingException;
 
 import org.jdom2.JDOMException;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
-import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
-import de.oszimt.gruppe3.bibliotheksverwaltung.factories.GuiDbFactory;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
-import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.DB;
-import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.IDataStorage;
-import de.oszimt.gruppe3.bibliotheksverwaltung.persistence_layer.XML;
 
 public class GUI implements IUserInterface {
 
@@ -99,6 +79,26 @@ public class GUI implements IUserInterface {
 //		new GUI();
 //	}
 
+	{
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }            
+	    } 
+	    catch (Exception e) {
+	    	// Set System L&F
+	        try {
+				UIManager.setLookAndFeel(
+				    UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e1) {
+				System.exit(1) ;
+			}
+	    }
+	    
+	}
 	/**
 	 * Create the application.
 	 */
@@ -159,7 +159,7 @@ public class GUI implements IUserInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
