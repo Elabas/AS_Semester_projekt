@@ -22,15 +22,18 @@ public class GUIActionListener implements ActionListener {
 	private IBusinessLogic logic;
 	private static GUIActionListener instance;
 	
-	 private  GUIActionListener(GUI gui, IBusinessLogic logic){
-		 this.logic = logic;
+	 private  GUIActionListener(GUI gui){
 		 this.gui = gui;
 	 }
 	 
-	 public static GUIActionListener getInstance(GUI gui, IBusinessLogic logic){
+	 public static GUIActionListener getInstance(GUI gui){
 		 if(instance == null)
-			 instance = new GUIActionListener(gui,logic);
+			 instance = new GUIActionListener(gui);
 		 return instance;
+	 }
+	 
+	 public void setLogic(IBusinessLogic logic) {
+		 this.logic = logic ;
 	 }
 	 
 	 @Override

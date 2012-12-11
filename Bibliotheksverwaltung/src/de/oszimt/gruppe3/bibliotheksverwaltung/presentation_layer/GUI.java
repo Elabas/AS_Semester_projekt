@@ -95,14 +95,15 @@ public class GUI implements IUserInterface {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args)  {
-		new GUI();
-	}
+//	public static void main(String[] args)  {
+//		new GUI();
+//	}
 
 	/**
 	 * Create the application.
 	 */
 	public GUI() {
+		this.actionListener = GUIActionListener.getInstance(this);
 		initialize();
 	}
 
@@ -427,14 +428,15 @@ public class GUI implements IUserInterface {
 
 	@Override
 	public void start() {
-		this.actionListener = GUIActionListener.getInstance(this,logic);
+		this.actionListener.setLogic(logic) ;
 		frame.setVisible(true);
 		refreshTableToDefault();
 	}
 
 	public Customer getSelectetCustomer() {
 		int row = mainTable.getSelectedRow();
-		int customerID = Integer.parseInt( (String) mainTable.getValueAt(row, 0));
+		System.out.println(row);
+		int customerID = Integer.parseInt(mainTable.getValueAt(row, 0).toString());
 		Customer customer =  logic.readCustomer(customerID);
 		return customer;
 	}
