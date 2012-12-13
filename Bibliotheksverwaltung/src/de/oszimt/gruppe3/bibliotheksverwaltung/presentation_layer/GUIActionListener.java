@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -77,12 +78,16 @@ public class GUIActionListener implements ActionListener {
 	 
 	private void displayBookForLoan() {
 		Loan loan = gui.getSelectetLoan();		
-		// TODO 		
+		ArrayList<Book> list = new ArrayList<Book>();
+	 	list.add(loan.getBook());
+	 	gui.showDataBooks(list);
 	}
 
 	private void displayCustomerForLoan() {
 		Loan loan = gui.getSelectetLoan();
-		//TODO
+		ArrayList<Customer> list = new ArrayList<Customer>();
+	 	list.add(loan.getCostumer());
+	 	gui.showDataCustomer(list);
 	}
 
 	private void updateLoan() {
