@@ -9,6 +9,7 @@ import java.io.Console;
 import java.io.PrintWriter;
 import java.util.List;
 
+
 /**
  * 
  * @author Tobias Hunziger
@@ -31,19 +32,132 @@ public class TUI  implements IUserInterface{
 	
 	private void drawMenu(){
 		
-		out.println("BIBILIOTEK-BÃœCHER-KUNDEN-VERWALTUNG");
+		out.println("BIBILIOTEK-BÜCHER-KUNDEN-VERWALTUNG");
 		this.drawSeperator();
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Kunden suchen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
-		out.println("Neuen Kunden Anlegen (a)");
+		while(true){
+			out.println("Anzeigen (a)");
+			out.println("Bearbeiten (b)");
+			out.println("Löschen (c)");
+			out.println("Erstellen (d)");
+			out.println("");
+			out.print("Ihre Eingabe: ");
+			String in = System.console().readLine();
 		
-		out.println();
-		out.print("Bitte WÃ¤hlen Sie einen MenÃ¼punkt: ");
+			if(in.equals("a")){
+				out.println("Kunden Anzeigen	(a)");
+				out.println("Bücher Anzeigen	(b)");
+				out.println("Ausleihen  Anzeigen	(c)");
+				in = System.console().readLine();
+				
+				if(in.equals("a")){
+					showDataCustomer(logic.getCustomers());
+				}else if(in.equals("b")){
+					showDataBook(logic.getBooks());
+				}else if(in.equals("c")){
+					showDataLoan(logic.getLoans());
+				}
+			}else if(in.equals("b")){
+				out.println("Kunden Bearbeiten	(a)");
+				out.println("Bücher Bearbeiten	(b)");
+				out.println("Ausleihen  Bearbeiten	(c)");
+				in = System.console().readLine();
+				
+				if(in.equals("a")){
+					showDataCustomer(logic.getCustomers());
+					out.println("ID Auswählen");
+					in = System.console().readLine();
+					Customer customer = logic.readCustomer(Integer.parseInt(in));
+					out.print("Name: ");
+					String name = System.console().readLine();
+					out.print("Vorname: ");
+					String vorname  = System.console().readLine();
+					out.print("Adresse: ");
+					String adresse  = System.console().readLine();
+					customer.setAddress(adresse);
+					customer.setName(vorname);
+					customer.setSurname(name);
+					logic.updateCustomer(customer);
+				}else if(in.equals("b")){
+					showDataBook(logic.getBooks());
+					out.println("ISBN Auswählen");
+					in = System.console().readLine();
+					Book book = logic.readBook(in);
+					out.print("ISBN: ");
+					book.setIsbn(System.console().readLine());
+					out.print("Titel: ");
+					book.setTitle(System.console().readLine());
+					out.print("Author: ");
+					book.setAuthor(System.console().readLine());
+					out.print("Preis: ");
+					book.setPrice(Double.parseDouble(System.console().readLine()));
+					logic.updateBook(book);
+				}else if(in.equals("c")){
+					showDataLoan(logic.getLoans());
+					out.println("ID Auswählen");
+					in = System.console().readLine();
+					Loan loan = logic.readLoan(Integer.parseInt(in));
+					
+				}
+			}else if(in.equals("c")){
+				out.println("Kunden Löschen	(a)");
+				out.println("Bücher Löschen	(b)");
+				out.println("Ausleihen  Löschen	(c)");
+				in = System.console().readLine();
+				
+				if(in.equals("a")){
+					showDataCustomer(logic.getCustomers());
+					out.println("ID Auswählen");
+					in = System.console().readLine();
+					Customer customer = logic.readCustomer(Integer.parseInt(in));
+					logic.deleteCustomer(customer);
+				}else if(in.equals("b")){
+					showDataBook(logic.getBooks());
+					out.println("ISBN Auswählen");
+					in = System.console().readLine();
+					Book book = logic.readBook(in);
+					logic.deleteBook(book);
+				}else if(in.equals("c")){
+					showDataLoan(logic.getLoans());
+					out.println("ID Auswählen");
+					in = System.console().readLine();
+					Loan loan = logic.readLoan(Integer.parseInt(in));
+					logic.deleteLoan(loan);
+				}
+			}else if(in.equals("d")){
+				out.println("Kunden Erstellen	(a)");
+				out.println("Bücher Erstellen	(b)");
+				out.println("Ausleihen  Erstellen	(c)");
+				in = System.console().readLine();
+				
+				if(in.equals("a")){
+					out.print("Name: ");
+					String name = System.console().readLine();
+					out.print("Vorname: ");
+					String vorname  = System.console().readLine();
+					out.print("Adresse: ");
+					String adresse  = System.console().readLine();
+					Customer customer = new Customer(vorname,name,adresse);
+					logic.saveCustomer(customer);
+				}else if(in.equals("b")){
+					out.print("ISBN: ");
+					String isbn = System.console().readLine();
+					out.print("Titel: ");
+					String titel = System.console().readLine();
+					out.print("Autor: ");
+					String autor = System.console().readLine();
+					double price = Double.parseDouble(System.console().readLine());
+					out.print("Preis: ");
+				}else if(in.equals("c")){
+					showDataLoan(logic.getLoans());
+					out.println("ID Auswählen");
+					in = System.console().readLine();
+					Loan loan = logic.readLoan(Integer.parseInt(in));
+				}
+			}
+			
+			out.println();
+			out.print("Bitte Wählen Sie einen Menüpunkt: ");
+		}
 	}
 	
 	private void drawSeperator(){
@@ -52,15 +166,24 @@ public class TUI  implements IUserInterface{
 	}
 	
 	public void showDataCustomer(List<Customer> customers){
-		
+		out.println("Kunden Nr.	|	Vorname		|	Nachname	|	Adresse");
+		for (Customer customer : customers) {
+			out.println(customer.getCustomerID()+"		|	"+customer.getName()+"		|	"+customer.getSurname()+"		|	"+customer.getAddress());
+		}
 	}
 	
-	public void showDataBookr(List<Book> books){
-			
+	public void showDataBook(List<Book> books){
+		out.println("ISBN		|	Titel		|	Author	|	Preis");
+		for (Book book : books) {
+			out.println(book.getIsbn()+"		|	"+book.getTitle()+"		|	"+book.getAuthor()+"		|	"+book.getPrice());
+		}
 		}
 	
 	public void showDataLoan(List<Loan> loans){
-		
+		out.println("Ausleih ID	|	Buch Titel		|	ISBN	|	Kunden Vorname	|	Kunden Nachname	|	Ausgeliehen an	|	Ausgeiehen bis");
+		for (Loan loan : loans) {
+			out.println(loan.getLoanID()+"		|	"+loan.getBook().getTitle()+"		|	"+loan.getBook().getIsbn()+"		|	"+loan.getCostumer().getName()+"		|	"+loan.getCostumer().getSurname()+"		|	"+loan.getStartOfLoan()+"		|	"+loan.getEndOfLoan());
+		}
 	}
 	
 	public int readInputInt(){
@@ -91,6 +214,7 @@ public class TUI  implements IUserInterface{
 	@Override
 	public void start() {
 		drawMenu();
+		showDataCustomer(logic.getCustomers());
 	}
 
 }
