@@ -1,12 +1,20 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
+import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
+import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
 /**
  * Kurzbeschreibung der Klasse
@@ -53,6 +61,63 @@ public class Dialog {
 
 	public static Book showBookDialog() {
 		return showBookDialog(null);
+	}
+	
+	public static Loan showLoanDialog(IBusinessLogic logic){
+		return showLoanDialog(null,logic);
+	}
+
+	public static Loan showLoanDialog(Loan loan,IBusinessLogic logic) {
+		JLabel lbBook = new JLabel("Bitte Buch Auswählen");
+		JTable tableBook = new JTable();
+		JLabel lbCustomer = new JLabel("Bitte Kunde Auswählen");
+		JTable tableCustomer = new JTable();
+		JLabel lbStartOfLoan = new JLabel("Ausleihdatum: ");
+		JTextField txtStartOfLoan = new JTextField();
+		JLabel lbEndOfLoan = new JLabel("Ausleihenddatum: ");
+		JTextField txtEndOfLoan = new JTextField();
+		
+		DefaultTableModel dftm = (DefaultTableModel) tableBook.getModel();
+		dftm.setColumnIdentifiers(new String[]{"ISBN","Titel","Autor","Preis"});
+		List<Book> books = logic.getBooks();
+		for (Book book : books) {
+			dftm.addRow(new Object[]{book.getIsbn(),book.getTitle(),book.getAuthor(),book.getPrice()});
+		}
+		
+		DefaultTableModel dftmc = (DefaultTableModel) tableCustomer.getModel();
+		dftmc.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","Ausleihvorgänge"});
+		List<Customer> customers = logic.getCustomers();
+		for (Customer customer : customers) {
+			dftmc.addRow(new Object[]{customer.getCustomerID(),customer.getName(),customer.getSurname(),customer.getAddress(),customer.getLoanList().size()});
+		}
+		
+		JComponent[] inputs = new JComponent[] { lbBook, tableBook, lbCustomer, tableCustomer, lbStartOfLoan, txtStartOfLoan, lbEndOfLoan, txtEndOfLoan };
+		if(loan != null){
+			txtStartOfLoan.setText(loan.getStartOfLoan());
+			txtEndOfLoan.setText(loan.getEndOfLoan());
+		}
+		JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+				new String[] { "Speichern", "Abbrechen" }, "Speichern");
+
+		int row = tableBook.getSelectedRow();
+		String isbn =(String) tableBook.getValueAt(row, 0);
+		Book book = logic.readBook(isbn);
+		
+		row = tableCustomer.getSelectedRow();
+		System.out.println(row);
+		int customerID = Integer.parseInt(tableCustomer.getValueAt(row, 0).toString());
+		Customer customer =  logic.readCustomer(customerID);
+		
+		if(loan != null){
+			loan.setBook(book);
+			loan.setCostumer(customer);
+			loan.setStartOfLoan(txtStartOfLoan.getText());
+			loan.setEndOfLoan(txtEndOfLoan.getText());
+			return loan;
+		}
+		
+		return new Loan(book, customer, txtStartOfLoan.getText(), txtEndOfLoan.getText());
 	}
 
 	public static Book showBookDialog(Book book) {

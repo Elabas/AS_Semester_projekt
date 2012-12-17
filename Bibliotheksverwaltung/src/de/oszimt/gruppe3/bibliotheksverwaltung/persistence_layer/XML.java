@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -14,6 +18,8 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
@@ -400,38 +406,120 @@ public class XML implements IDataStorage {
 
 	@Override
 	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
-		// TODO Auto-generated method stub
-		return false;
+		DateFormat df = new SimpleDateFormat();
+		Date startNew;
+		Date endNew;
+		try {
+			startNew = df.parse(startOfLoan);
+			endNew = df.parse(endOfLoan);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		for (Loan loan : book.getLoanList()) {
+			Date startOld;
+			Date endOld;
+			try {
+				startOld = df.parse(loan.getStartOfLoan());
+				endOld = df.parse(loan.getEndOfLoan());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return false;
+			}
+			
+			if(startNew.after(startOld) && startNew.before(endOld))	return false;
+			if(startNew.before(startOld) && endNew.after(endOld) )	return false;
+			if(startNew.after(startOld) && endNew.before(endOld))	return false;
+			if(endNew.after(startOld) && endNew.before(endOld))	return false;
+			
+		}
+		return true;
 	}
 
 	@Override
 	public List<Customer> searchCustomer(String term) {
-		// TODO Auto-generated method stub
-		return null;
+		term = "%"+term+"%";
+		List<Customer> match = new ArrayList<Customer>();
+		for (Customer customer : getCustomers()) {
+			if(customer.getAddress().matches(term) || new String(customer.getCustomerID()+"").matches(term) || customer.getName().matches(term) || customer.getSurname().matches(term))
+				match.add(customer);
+		}
+		return match;
 	}
 
 	@Override
 	public List<Book> searchBook(String term) {
-		// TODO Auto-generated method stub
-		return null;
+		term = "%"+term+"%";
+		List<Book> match = new ArrayList<Book>();
+		for (Book book : getBooks()) {
+			if(book.getAuthor().matches(term) || book.getIsbn().matches(term) || new String(book.getPrice()+"").matches(term) || book.getTitle().matches(term))
+				match.add(book);
+		}
+		
+		return match;
 	}
 
 	@Override
 	public List<Book> getBooks() {
-		// TODO Auto-generated method stub
-		return null;
+		if(doc == null)
+			return null;
+		
+		Element currRoot = doc.getRootElement();
+		Element parrentBook = currRoot.getChild("books");
+		List<Element> listBooks = parrentBook.getChildren();
+		List<Book> books = new ArrayList<Book>();
+		for (Element book : listBooks) {
+			String bookIsbn = book.getChild("isbn").getText();
+				String title = book.getChild("title").getText();
+				String author = book.getChild("author").getText();
+				double price = Double.parseDouble(book.getChild("price").getText());
+	
+				books.add( new Book(bookIsbn, title, author, price));
+		}
+		return books;
 	}
 
 	@Override
 	public List<Customer> getCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		if(doc == null)
+			return null;
+		
+		Element currRoot = doc.getRootElement();
+		Element parrentCusto = currRoot.getChild("customers");
+		List<Element> listCustos = parrentCusto.getChildren();
+		List<Customer> customers = new ArrayList<Customer>();
+		for (Element customer : listCustos) {
+			int newCustomerID = Integer.parseInt(customer.getChild("customerID").getText());
+				String name = customer.getChild("name").getText();
+				String surname = customer.getChild("surname").getText();
+				String address = customer.getChild("name").getText();
+				customers.add(new Customer(name, surname, newCustomerID, address));
+			}
+		return customers;
 	}
 
 	@Override
 	public List<Loan> getLoans() {
-		// TODO Auto-generated method stub
-		return null;
+		if(doc == null)
+			return null;
+		
+		Element currRoot = doc.getRootElement();
+		Element parrentLoan = currRoot.getChild("loanBooks");
+		List<Element> listLoan = parrentLoan.getChildren();
+		List<Loan> loans = new ArrayList<Loan>();
+		for (Element loan : listLoan) {
+			int newLoanID = Integer.parseInt(loan.getChild("loanID").getText());
+				String startOfLoan = null;
+				String endOfLoan = null; 
+				int custoID = Integer.parseInt(loan.getChild("CustomerID").getText());
+				String bookIsbn = loan.getChild("isbn").getText();
+					startOfLoan = loan.getChild("startOfLoan").getText();
+					endOfLoan = loan.getChild("startOfLoan").getText();
+				
+				loans.add(new Loan(newLoanID,this.readBook(bookIsbn), this.readCustomer(custoID), startOfLoan, endOfLoan));			
+		}
+		return loans;
 	}
 
 

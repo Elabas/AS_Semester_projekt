@@ -71,11 +71,26 @@ public class GUIActionListener implements ActionListener {
 				displayCustomerForLoan();
 		else if(e.getSource().equals(gui.getMenuItemBuchFuerLoan()))
 				displayBookForLoan();
+		else if(e.getSource().equals(gui.getMenuItemLoanBearbeiten()))
+				updateLoan();
+		else if(e.getSource().equals(gui.getMenuItemLoanErstellen()))
+				createLoan();
 
 	}
 
 	 
 	 
+	private void createLoan() {
+		Loan loan = Dialog.showLoanDialog(logic);
+		if(loan != null){
+			if(!logic.saveLoan(loan))
+				new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
+			gui.showDataLoan(logic.getLoans());
+		}else
+			new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
+		
+	}
+
 	private void displayBookForLoan() {
 		Loan loan = gui.getSelectetLoan();		
 		ArrayList<Book> list = new ArrayList<Book>();
@@ -91,7 +106,14 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void updateLoan() {
-		// TODO Auto-generated method stub
+		Loan loan = gui.getSelectetLoan();
+		loan = Dialog.showLoanDialog(loan, logic);
+		if(loan != null){
+			if(!logic.updateLoan(loan))
+				new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
+			gui.showDataLoan(logic.getLoans());
+		}else
+			new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 		
 	}
 

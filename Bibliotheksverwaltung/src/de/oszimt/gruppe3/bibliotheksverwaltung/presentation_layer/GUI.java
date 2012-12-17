@@ -55,6 +55,7 @@ public class GUI implements IUserInterface {
 	private JMenuItem menuItemBuchLoeschen;
 	private JMenuItem menuItemAusleihFuerBuch;
 	private JMenuItem menuItemLoanLoeschen;
+	private JMenuItem menuItemLoanErstellen;
 	private JMenuItem menuItemLoanBearbeiten;
 	private JMenuItem menuItemKundeFuerLoan;
 	private JMenuItem menuItemBuchFuerLoan;
@@ -244,6 +245,9 @@ public class GUI implements IUserInterface {
 		menuLeihen = new JMenu("Leihen");
 		menuBar.add(menuLeihen);
 		
+		menuItemLoanErstellen = new JMenuItem("Ausleihvorgang Erstellen");
+		menuLeihen.add(menuItemLoanErstellen);
+		
 		menuItemLoanLoeschen = new JMenuItem("Ausleihvorgang Löschen");
 		menuLeihen.add(menuItemLoanLoeschen);
 		
@@ -412,6 +416,10 @@ public class GUI implements IUserInterface {
 
 	public JMenuItem getMenuItemBuchFuerLoan() {
 		return menuItemBuchFuerLoan;
+	}
+
+	public JMenuItem getMenuItemLoanErstellen() {
+		return menuItemLoanErstellen;
 	}
 
 	public void setMenuDatei(JMenu menuDatei) {
