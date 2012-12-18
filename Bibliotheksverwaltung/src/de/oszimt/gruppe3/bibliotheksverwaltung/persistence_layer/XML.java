@@ -31,7 +31,7 @@ public class XML implements IDataStorage {
 	private File f;
 	
 	public XML() throws JDOMException, IOException{
-		this.f = new File("Bibliotheksverwaltung\\src\\de\\oszimt\\gruppe3\\bibliotheksverwaltung\\resources\\data.xml");
+		this.f = new File("resources\\data.xml");
 		this.doc = this.openFile(this.f);
 	}
 	
@@ -97,7 +97,14 @@ public class XML implements IDataStorage {
 		Element parrentLoan = currRoot.getChild("loanBooks");
 		Element newLoan = new Element("loanBook");
 		
-		newLoan.addContent(new Element("loanID").setText( loan.getLoanID()+""));
+		int id = 0;
+		for (Loan item : getLoans()) {
+			if(item.getLoanID() > id){
+				id = item.getLoanID();
+			}
+		}
+		id++;
+		newLoan.addContent(new Element("loanID").setText( id+""));
 		newLoan.addContent(new Element("isbn").setText(loan.getBook().getIsbn()));
 		newLoan.addContent(new Element("CustomerID").setText(loan.getCostumer().getCustomerID()+""));
 		newLoan.addContent(new Element("startOfLoan").setText(loan.getStartOfLoan().toString()));
@@ -115,8 +122,13 @@ public class XML implements IDataStorage {
 		Element currRoot = doc.getRootElement();
 		Element parrentCusto = currRoot.getChild("customers");
 		Element newCusto = new Element("customer");
-		
-		newCusto.addContent(new Element("customerID").setText(customer.getCustomerID()+""));
+		int id = 0;
+		for (Customer item : getCustomers()) {
+			if(item.getCustomerID() > id)
+				id= item.getCustomerID();
+		}
+		id++;
+		newCusto.addContent(new Element("customerID").setText(id+""));
 		newCusto.addContent(new Element("name").setText(customer.getName()));
 		newCusto.addContent(new Element("surename").setText(customer.getSurname()));
 		newCusto.addContent(new Element("address").setText(customer.getAddress()));
@@ -206,7 +218,7 @@ public class XML implements IDataStorage {
 		for (Element currBook : listBooks) {
 			String isbn = currBook.getChild("isbn").getText();
 			if(book.getIsbn().equals(isbn)){
-				doc.removeContent(currBook);
+				books.removeContent(currBook);
 				return true;
 			}
 		}
@@ -225,7 +237,7 @@ public class XML implements IDataStorage {
 		for (Element currLoan : listLoans) {
 			int loanID = Integer.parseInt(currLoan.getChild("loanID").getText());
 			if(loan.getLoanID() == loanID){
-				doc.removeContent(currLoan);
+				loans.removeContent(currLoan);
 				return true;
 			}
 		}
@@ -252,7 +264,7 @@ public class XML implements IDataStorage {
 		for (Element currCusto : listCusto) {
 			int custoID = Integer.parseInt(currCusto.getChild("customerID").getText());
 			if(customer.getCustomerID() == custoID){
-				doc.removeContent(currCusto);
+				parrentCusto.removeContent(currCusto);
 				return true;
 			}
 		}
@@ -275,7 +287,8 @@ public class XML implements IDataStorage {
 				String author = book.getChild("author").getText();
 				double price = Double.parseDouble(book.getChild("price").getText());
 	
-				return new Book(bookIsbn, title, author, price);
+				Book bo = new Book(bookIsbn, title, author, price);
+				return bo;
 			}
 		}
 		return null;
@@ -346,9 +359,10 @@ public class XML implements IDataStorage {
 			int newCustomerID = Integer.parseInt(customer.getChild("customerID").getText());
 			if(newCustomerID == customerID){
 				String name = customer.getChild("name").getText();
-				String surname = customer.getChild("surname").getText();
+				String surename = customer.getChild("surename").getText();
 				String address = customer.getChild("name").getText();
-				return new Customer(name, surname, newCustomerID, address);
+				Customer cus = new Customer(name, surename, newCustomerID, address);
+				return cus;
 			}
 		}
 		return null;
@@ -357,8 +371,9 @@ public class XML implements IDataStorage {
 	@Override
 	public List<Loan> getLoansByBook(Book book) {
 		List<Loan> loans = new ArrayList<Loan>();
-		for (Loan item : book.getLoanList()) {
-			loans.add(readLoan(item.getLoanID()));
+		for (Loan item : getLoans()) {
+			if(item.getBook().getIsbn().equals(book.getIsbn()))
+				loans.add(readLoan(item.getLoanID()));
 		}
 		return loans;
 	}
@@ -366,8 +381,9 @@ public class XML implements IDataStorage {
 	@Override
 	public List<Loan> getLoansByCustomer(Customer customer) {
 		List<Loan> loans = new ArrayList<Loan>();
-		for (Loan item : customer.getLoanList()) {
-			loans.add(readLoan(item.getLoanID()));
+		for (Loan item : getLoans()) {
+			if(item.getCostumer().getCustomerID() == customer.getCustomerID())
+				loans.add(readLoan(item.getLoanID()));
 		}
 		return loans;
 	}
@@ -492,9 +508,9 @@ public class XML implements IDataStorage {
 		for (Element customer : listCustos) {
 			int newCustomerID = Integer.parseInt(customer.getChild("customerID").getText());
 				String name = customer.getChild("name").getText();
-				String surname = customer.getChild("surname").getText();
+				String surename = customer.getChild("surename").getText();
 				String address = customer.getChild("name").getText();
-				customers.add(new Customer(name, surname, newCustomerID, address));
+				customers.add(new Customer(name, surename, newCustomerID, address));
 			}
 		return customers;
 	}

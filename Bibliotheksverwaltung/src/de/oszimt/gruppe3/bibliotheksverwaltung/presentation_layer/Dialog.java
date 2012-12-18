@@ -1,6 +1,5 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -11,7 +10,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
-import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.Logic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;

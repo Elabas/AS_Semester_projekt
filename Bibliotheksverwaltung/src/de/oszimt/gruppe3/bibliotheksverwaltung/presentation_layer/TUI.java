@@ -39,6 +39,7 @@ public class TUI  implements IUserInterface{
 			out.println("Bearbeiten (b)");
 			out.println("Löschen (c)");
 			out.println("Erstellen (d)");
+			out.println("Datenhaltung wechseln (e)");
 			out.println("");
 			out.print("Ihre Eingabe: ");
 			String in = System.console().readLine();
@@ -67,6 +68,10 @@ public class TUI  implements IUserInterface{
 					out.println("ID Auswählen");
 					in = System.console().readLine();
 					Customer customer = logic.readCustomer(Integer.parseInt(in));
+					if(customer == null){
+						drawError("Kunde Exestiert Nicht");
+						continue;
+					}
 					out.print("Name: ");
 					String name = System.console().readLine();
 					out.print("Vorname: ");
@@ -76,12 +81,17 @@ public class TUI  implements IUserInterface{
 					customer.setAddress(adresse);
 					customer.setName(vorname);
 					customer.setSurname(name);
-					logic.updateCustomer(customer);
+					if(!logic.updateCustomer(customer))
+						drawError("Beim Bearbeiten des Kunden ist ein Fehler Aufgetreten");
 				}else if(in.equals("b")){
 					showDataBook(logic.getBooks());
 					out.println("ISBN Auswählen");
 					in = System.console().readLine();
 					Book book = logic.readBook(in);
+					if(book == null){
+						drawError("Buch Exestiert Nicht");
+						continue;
+					}
 					out.print("ISBN: ");
 					book.setIsbn(System.console().readLine());
 					out.print("Titel: ");
@@ -90,13 +100,17 @@ public class TUI  implements IUserInterface{
 					book.setAuthor(System.console().readLine());
 					out.print("Preis: ");
 					book.setPrice(Double.parseDouble(System.console().readLine()));
-					logic.updateBook(book);
+					if(!logic.updateBook(book))
+						drawError("Beim Bearbeiten des Buches ist ein Fehler Aufgetreten");
 				}else if(in.equals("c")){
 					showDataLoan(logic.getLoans());
 					out.println("ID Auswählen");
 					in = System.console().readLine();
 					Loan loan = logic.readLoan(Integer.parseInt(in));
-					
+					if(loan == null){
+						drawError("Ausleihvorgang Exestiert Nicht");
+						continue;
+					}
 					out.println("Bücher: ");
 					showDataBook(logic.getBooks());
 					out.println("Buch ISBN Auswählen: ");
@@ -115,7 +129,8 @@ public class TUI  implements IUserInterface{
 						loan.setStartOfLoan(startDate);
 						loan.setEndOfLoan(endDate);
 						
-						logic.updateLoan(loan);
+						if(!logic.updateLoan(loan))
+							drawError("Beim Bearbeiten des Ausleihvorganges ist ein Fehler Aufgetreten");
 					
 				}
 			}else if(in.equals("c")){
@@ -129,19 +144,34 @@ public class TUI  implements IUserInterface{
 					out.println("ID Auswählen");
 					in = System.console().readLine();
 					Customer customer = logic.readCustomer(Integer.parseInt(in));
-					logic.deleteCustomer(customer);
+					if(customer == null){
+						drawError("Kunde Exestiert Nicht");
+						continue;
+					}
+					if(!logic.deleteCustomer(customer))
+						drawError("Beim Löschen des Kunden ist ein Fehler Aufgetreten");
 				}else if(in.equals("b")){
 					showDataBook(logic.getBooks());
 					out.println("ISBN Auswählen");
 					in = System.console().readLine();
 					Book book = logic.readBook(in);
-					logic.deleteBook(book);
+					if(book == null){
+						drawError("Buch Exestiert Nicht");
+						continue;
+					}
+					if(!logic.deleteBook(book))
+						drawError("Beim Löschen des Buches ist ein Fehler Aufgetreten");
 				}else if(in.equals("c")){
 					showDataLoan(logic.getLoans());
 					out.println("ID Auswählen");
 					in = System.console().readLine();
 					Loan loan = logic.readLoan(Integer.parseInt(in));
-					logic.deleteLoan(loan);
+					if(loan == null){
+						drawError("Ausleihvorgang Exestiert Nicht");
+						continue;
+					}
+					if(!logic.deleteLoan(loan))
+						drawError("Beim Löschen des Ausleihvorganges ist ein Fehler Aufgetreten");
 				}
 			}else if(in.equals("d")){
 				out.println("Kunden Erstellen	(a)");
@@ -157,7 +187,8 @@ public class TUI  implements IUserInterface{
 					out.print("Adresse: ");
 					String adresse  = System.console().readLine();
 					Customer customer = new Customer(vorname,name,adresse);
-					logic.saveCustomer(customer);
+					if(!logic.saveCustomer(customer))
+						drawError("Beim Erstellen des Kunden ist ein Fehler Aufgetreten");
 				}else if(in.equals("b")){
 					out.print("ISBN: ");
 					String isbn = System.console().readLine();
@@ -166,9 +197,10 @@ public class TUI  implements IUserInterface{
 					out.print("Autor: ");
 					String autor = System.console().readLine();
 					out.print("Preis: ");
-					double price = Double.parseDouble(System.console().readLine());
-					Book book = new Book(isbn,titel,autor,price) ;
-					logic.saveBook(book) ;
+					Double price = Double.parseDouble(System.console().readLine());
+					Book book = new Book(isbn, titel, autor, price);
+					if(!logic.saveBook(book))
+						drawError("Beim Erstellen des Buches ist ein Fehler Aufgetreten");
 				}else if(in.equals("c")){
 					out.println("Bücher: ");
 					showDataBook(logic.getBooks());
@@ -183,8 +215,12 @@ public class TUI  implements IUserInterface{
 					out.println("End Datum eingeben (dd:mm:yy):");
 					String endDate = System.console().readLine();
 				
-					logic.saveLoan(new Loan(book, customer, startDate, endDate));
+					if(!logic.saveLoan(new Loan(book, customer, startDate, endDate)))
+							drawError("Beim Erstellen des Ausleihvorganges ist ein Fehler Aufgetreten");
 				}
+			}else if(in.equals("e")){
+				if(!logic.changePersistence())
+					drawError("Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten");
 			}
 			
 			out.println();
@@ -199,6 +235,7 @@ public class TUI  implements IUserInterface{
 	
 	public void showDataCustomer(List<Customer> customers){
 		out.println("Kunden Nr.	|	Vorname		|	Nachname	|	Adresse");
+		if(customers != null)
 		for (Customer customer : customers) {
 			out.println(customer.getCustomerID()+"		|	"+customer.getName()+"		|	"+customer.getSurname()+"		|	"+customer.getAddress());
 		}
@@ -206,6 +243,7 @@ public class TUI  implements IUserInterface{
 	
 	public void showDataBook(List<Book> books){
 		out.println("ISBN		|	Titel		|	Author	|	Preis");
+		if(books != null)
 		for (Book book : books) {
 			out.println(book.getIsbn()+"		|	"+book.getTitle()+"		|	"+book.getAuthor()+"		|	"+book.getPrice());
 		}
@@ -213,6 +251,7 @@ public class TUI  implements IUserInterface{
 	
 	public void showDataLoan(List<Loan> loans){
 		out.println("Ausleih ID	|	Buch Titel		|	ISBN	|	Kunden Vorname	|	Kunden Nachname	|	Ausgeliehen an	|	Ausgeiehen bis");
+		if(loans != null)
 		for (Loan loan : loans) {
 			out.println(loan.getLoanID()+"		|	"+loan.getBook().getTitle()+"		|	"+loan.getBook().getIsbn()+"		|	"+loan.getCostumer().getName()+"		|	"+loan.getCostumer().getSurname()+"		|	"+loan.getStartOfLoan()+"		|	"+loan.getEndOfLoan());
 		}
@@ -232,11 +271,12 @@ public class TUI  implements IUserInterface{
 		for (int i = 0; i < length+8; i++) {
 			out.print("-");
 		}
-		out.print("\n");
-		out.print("|  ! "+msg+" ! |\n");
+		out.println("");
+		out.println("|  ! "+msg+" ! |");
 		for (int i = 0; i < length+8; i++) {
 			out.print("-");
 		}
+		out.println("");
 	}
 	@Override
 	public void setLogic(IBusinessLogic logic) {
