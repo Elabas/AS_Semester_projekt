@@ -422,7 +422,7 @@ public class XML implements IDataStorage {
 
 	@Override
 	public boolean isAvailable(Book book, String startOfLoan, String endOfLoan) {
-		DateFormat df = new SimpleDateFormat();
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		Date startNew;
 		Date endNew;
 		try {
