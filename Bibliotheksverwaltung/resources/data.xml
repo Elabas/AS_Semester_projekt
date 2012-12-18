@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-    <customers />
-    <books />
-    <loanBooks /> 
+  <customers>
+    <customer>
+      <customerID>1</customerID>
+      <name>Horst</name>
+      <surename>Müller</surename>
+      <address>Prenzlauer Straße 12</address>
+    </customer>
+    <customer>
+      <customerID>2</customerID>
+      <name>Tim</name>
+      <surename>Melzer</surename>
+      <address>See Straße 31</address>
+    </customer>
+    <customer>
+      <customerID>3</customerID>
+      <name>Max</name>
+      <surename>Menzel</surename>
+      <address>Perleberger Straße 2</address>
+    </customer>
+  </customers>
+  <books>
+    <book>
+      <isbn>978-3836219976</isbn>
+      <title>Visual C# 2012: Das umfassende Handbuch</title>
+      <author>Galileo Computing</author>
+      <price>49.9</price>
+    </book>
+    <book>
+      <isbn>978-3936546606</isbn>
+      <title>PC-Forensik: Daten suchen und wiederherstellen</title>
+      <author>C &amp; l Computer- U. Literaturverlag</author>
+      <price>49.9</price>
+    </book>
+  </books>
+  <loanBooks>
+    <loanBook>
+      <loanID>1</loanID>
+      <isbn>978-3836219976</isbn>
+      <CustomerID>2</CustomerID>
+      <startOfLoan>12.12.2012</startOfLoan>
+      <endOfLoan>31.12.2012</endOfLoan>
+    </loanBook>
+    <loanBook>
+      <loanID>2</loanID>
+      <isbn>978-3936546606</isbn>
+      <CustomerID>3</CustomerID>
+      <startOfLoan>03.11.2012</startOfLoan>
+      <endOfLoan>21.12.2012</endOfLoan>
+    </loanBook>
+  </loanBooks>
 </data>
