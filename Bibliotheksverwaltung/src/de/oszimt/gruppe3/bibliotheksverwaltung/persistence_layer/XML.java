@@ -509,7 +509,7 @@ public class XML implements IDataStorage {
 			int newCustomerID = Integer.parseInt(customer.getChild("customerID").getText());
 				String name = customer.getChild("name").getText();
 				String surename = customer.getChild("surename").getText();
-				String address = customer.getChild("name").getText();
+				String address = customer.getChild("address").getText();
 				customers.add(new Customer(name, surename, newCustomerID, address));
 			}
 		return customers;
