@@ -441,7 +441,7 @@ public class GUI implements IUserInterface {
 		refreshTableToDefault();
 	}
 
-	public Customer getSelectetCustomer() {
+	public Customer getSelectedCustomer() {
 		int row = mainTable.getSelectedRow();
 		System.out.println(row);
 		int customerID = Integer.parseInt(mainTable.getValueAt(row, 0).toString());
@@ -449,14 +449,14 @@ public class GUI implements IUserInterface {
 		return customer;
 	}
 
-	public Book getSelectetBook() {
+	public Book getSelectetedBook() {
 		int row = mainTable.getSelectedRow();
 		String isbn =(String) mainTable.getValueAt(row, 0);
 		Book book = logic.readBook(isbn);
 		return book;
 	}
 
-	public Loan getSelectetLoan() {
+	public Loan getSelectedLoan() {
 		int row = mainTable.getSelectedRow();
 		int loanId = Integer.parseInt((String)mainTable.getValueAt(row, 0));
 		Loan loan = logic.readLoan(loanId);

@@ -92,21 +92,21 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void displayBookForLoan() {
-		Loan loan = gui.getSelectetLoan();		
+		Loan loan = gui.getSelectedLoan();		
 		ArrayList<Book> list = new ArrayList<Book>();
 	 	list.add(loan.getBook());
 	 	gui.showDataBooks(list);
 	}
 
 	private void displayCustomerForLoan() {
-		Loan loan = gui.getSelectetLoan();
+		Loan loan = gui.getSelectedLoan();
 		ArrayList<Customer> list = new ArrayList<Customer>();
 	 	list.add(loan.getCostumer());
 	 	gui.showDataCustomer(list);
 	}
 
 	private void updateLoan() {
-		Loan loan = gui.getSelectetLoan();
+		Loan loan = gui.getSelectedLoan();
 		loan = Dialog.showLoanDialog(loan, logic);
 		if(loan != null){
 			if(!logic.updateLoan(loan))
@@ -118,17 +118,17 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void displayLoanForBook() {
-		Book book = gui.getSelectetBook();
+		Book book = gui.getSelectetedBook();
 		gui.showDataLoan(logic.getLoansByBook(book));
 	}
 
 	private void displayLoanForCustomer() {
-		Customer customer = gui.getSelectetCustomer();
+		Customer customer = gui.getSelectedCustomer();
 		gui.showDataLoan(logic.getLoansByCostumer(customer));
 	}
 
 	private void deleteBook() {
-		Book book = gui.getSelectetBook();
+		Book book = gui.getSelectetedBook();
 		if(book != null){
 			if(!logic.deleteBook(book))
 				new JOptionPane("Beim Löschen des Buches ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
@@ -138,7 +138,7 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void updateBook() {
-		Book book = gui.getSelectetBook();
+		Book book = gui.getSelectetedBook();
 		book = Dialog.showBookDialog(book);
 		if(book != null){
 			if(!logic.updateBook(book))
@@ -157,7 +157,7 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void deleteCustomer() {
-		Customer costumer = gui.getSelectetCustomer();
+		Customer costumer = gui.getSelectedCustomer();
 		if(costumer != null){
 			if(!logic.deleteCustomer(costumer))
 				new JOptionPane("Beim Löschen des Kunden ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
@@ -169,7 +169,7 @@ public class GUIActionListener implements ActionListener {
 	}
 
 	private void updateCustomer() {
-		Customer customer = gui.getSelectetCustomer();
+		Customer customer = gui.getSelectedCustomer();
 		if(customer != null){
 			customer = Dialog.showCustomerDialog(customer);
 			if(!logic.updateCustomer(customer)) 

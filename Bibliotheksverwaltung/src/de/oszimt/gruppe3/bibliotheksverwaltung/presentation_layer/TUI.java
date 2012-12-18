@@ -1,17 +1,13 @@
 package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 
+import java.io.Console;
+import java.io.PrintWriter;
+import java.util.List;
+
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
-
-import java.io.Console;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -169,8 +165,10 @@ public class TUI  implements IUserInterface{
 					String titel = System.console().readLine();
 					out.print("Autor: ");
 					String autor = System.console().readLine();
-					double price = Double.parseDouble(System.console().readLine());
 					out.print("Preis: ");
+					double price = Double.parseDouble(System.console().readLine());
+					Book book = new Book(isbn,titel,autor,price) ;
+					logic.saveBook(book) ;
 				}else if(in.equals("c")){
 					out.println("Bücher: ");
 					showDataBook(logic.getBooks());
@@ -180,10 +178,10 @@ public class TUI  implements IUserInterface{
 					showDataCustomer(logic.getCustomers());
 					out.println("Kunden ID Auswählen: ");
 					Customer customer = logic.readCustomer(Integer.parseInt(System.console().readLine()));
-						out.println("Ausleih Datum eingeben (dd:mm:yy):");
-						String startDate = System.console().readLine();
-						out.println("End Datum eingeben (dd:mm:yy):");
-						String endDate = System.console().readLine();
+					out.println("Ausleih Datum eingeben (dd:mm:yy):");
+					String startDate = System.console().readLine();
+					out.println("End Datum eingeben (dd:mm:yy):");
+					String endDate = System.console().readLine();
 				
 					logic.saveLoan(new Loan(book, customer, startDate, endDate));
 				}
