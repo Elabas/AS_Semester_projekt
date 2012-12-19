@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class Customer implements Serializable {
 
+	/**
+	 * 
+	 */
 	private int customerID;
 	private String name;
 	private String surname;	
