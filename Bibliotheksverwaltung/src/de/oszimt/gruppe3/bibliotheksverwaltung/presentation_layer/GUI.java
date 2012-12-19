@@ -38,7 +38,7 @@ public class GUI implements IUserInterface {
 	private JMenu menuCustomer;
 	private JMenu menuBook;
 	private JMenu menuLoan;
-	private JMenuItem menuItemDatabase;
+	private JMenuItem menuItemDataStorage;
 	private JMenuItem menuItemXML;
 	private JSeparator separator;
 	private JMenuItem menuItemExit;
@@ -60,7 +60,6 @@ public class GUI implements IUserInterface {
 	private JSeparator separator_3;
 	private JSeparator separator_4;
 	private JSeparator separator_5;
-	private JSeparator separator_6;
 	private IBusinessLogic logic;
 	private GUIActionListener actionListener;
 
@@ -131,12 +130,8 @@ public class GUI implements IUserInterface {
 		return menuLoan;
 	}
 
-	public JMenuItem getMenuItemDatabase() {
-		return menuItemDatabase;
-	}
-
-	public JMenuItem getMenuItemXML() {
-		return menuItemXML;
+	public JMenuItem getMenuItemDataStorage() {
+		return menuItemDataStorage;
 	}
 
 	public JMenuItem getMenuItemExit() {
@@ -257,14 +252,10 @@ public class GUI implements IUserInterface {
 		menuFile = new JMenu("Datei");
 		menuBar.add(menuFile);
 		
-		menuItemDatabase = new JMenuItem("Datenbank Benutzen");
-		menuItemDatabase.addActionListener(actionListener);
-		menuFile.add(menuItemDatabase);
-		
-		menuItemXML = new JMenuItem("XML Benutzen");
-		menuItemXML.addActionListener(actionListener);
-		menuFile.add(menuItemXML);
-		
+		menuItemDataStorage = new JMenuItem("Datenhaltung wechseln");
+		menuItemDataStorage.addActionListener(actionListener);
+		menuFile.add(menuItemDataStorage);
+			
 		separator = new JSeparator();
 		menuFile.add(separator);
 		

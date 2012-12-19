@@ -3,6 +3,7 @@ package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 import java.io.Console;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Scanner;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
@@ -41,8 +42,9 @@ public class TUI  implements IUserInterface{
 			out.println("Erstellen (d)");
 			out.println("Datenhaltung wechseln (e)");
 			out.println("");
-			out.print("Ihre Eingabe: ");
-			String in = System.console().readLine();
+			out.println("Ihre Eingabe: ");
+//			String in = System.console().readLine();
+			String in = System.console().readLine() ;
 		
 			if(in.equals("a")){
 				out.println("Kunden Anzeigen	(a)");
@@ -72,11 +74,11 @@ public class TUI  implements IUserInterface{
 						drawError("Kunde Exestiert Nicht");
 						continue;
 					}
-					out.print("Name: ");
+					out.println("Name: ");
 					String name = System.console().readLine();
-					out.print("Vorname: ");
+					out.println("Vorname: ");
 					String vorname  = System.console().readLine();
-					out.print("Adresse: ");
+					out.println("Adresse: ");
 					String adresse  = System.console().readLine();
 					customer.setAddress(adresse);
 					customer.setName(vorname);
@@ -92,13 +94,13 @@ public class TUI  implements IUserInterface{
 						drawError("Buch Exestiert Nicht");
 						continue;
 					}
-					out.print("ISBN: ");
+					out.println("ISBN: ");
 					book.setIsbn(System.console().readLine());
-					out.print("Titel: ");
+					out.println("Titel: ");
 					book.setTitle(System.console().readLine());
-					out.print("Author: ");
+					out.println("Author: ");
 					book.setAuthor(System.console().readLine());
-					out.print("Preis: ");
+					out.println("Preis: ");
 					book.setPrice(Double.parseDouble(System.console().readLine()));
 					if(!logic.updateBook(book))
 						drawError("Beim Bearbeiten des Buches ist ein Fehler Aufgetreten");
@@ -180,23 +182,23 @@ public class TUI  implements IUserInterface{
 				in = System.console().readLine();
 				
 				if(in.equals("a")){
-					out.print("Name: ");
+					out.println("Name: ");
 					String name = System.console().readLine();
-					out.print("Vorname: ");
+					out.println("Vorname: ");
 					String vorname  = System.console().readLine();
-					out.print("Adresse: ");
+					out.println("Adresse: ");
 					String adresse  = System.console().readLine();
 					Customer customer = new Customer(vorname,name,adresse);
 					if(!logic.saveCustomer(customer))
 						drawError("Beim Erstellen des Kunden ist ein Fehler Aufgetreten");
 				}else if(in.equals("b")){
-					out.print("ISBN: ");
+					out.println("ISBN: ");
 					String isbn = System.console().readLine();
-					out.print("Titel: ");
+					out.println("Titel: ");
 					String titel = System.console().readLine();
-					out.print("Autor: ");
+					out.println("Autor: ");
 					String autor = System.console().readLine();
-					out.print("Preis: ");
+					out.println("Preis: ");
 					Double price = Double.parseDouble(System.console().readLine());
 					Book book = new Book(isbn, titel, autor, price);
 					if(!logic.saveBook(book))
@@ -224,7 +226,7 @@ public class TUI  implements IUserInterface{
 			}
 			
 			out.println();
-			out.print("Bitte Wählen Sie einen Menüpunkt: ");
+			out.println("Bitte Wählen Sie einen Menüpunkt: ");
 		}
 	}
 	

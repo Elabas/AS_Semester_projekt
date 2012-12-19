@@ -19,8 +19,6 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
@@ -455,9 +453,11 @@ public class XML implements IDataStorage {
 
 	@Override
 	public List<Customer> searchCustomer(String term) {
-		term = "%"+term+"%";
+		term = ".*"+term+".*";
 		List<Customer> match = new ArrayList<Customer>();
+		System.out.println(term);
 		for (Customer customer : getCustomers()) {
+			System.out.println(customer.getAddress().matches(term) + " " + customer.getSurname().matches(term));
 			if(customer.getAddress().matches(term) || new String(customer.getCustomerID()+"").matches(term) || customer.getName().matches(term) || customer.getSurname().matches(term))
 				match.add(customer);
 		}
@@ -466,7 +466,7 @@ public class XML implements IDataStorage {
 
 	@Override
 	public List<Book> searchBook(String term) {
-		term = "%"+term+"%";
+		term = ".*"+term+".*";
 		List<Book> match = new ArrayList<Book>();
 		for (Book book : getBooks()) {
 			if(book.getAuthor().matches(term) || book.getIsbn().matches(term) || new String(book.getPrice()+"").matches(term) || book.getTitle().matches(term))
