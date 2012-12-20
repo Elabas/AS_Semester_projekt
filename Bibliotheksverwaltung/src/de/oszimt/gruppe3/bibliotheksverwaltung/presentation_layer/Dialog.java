@@ -42,7 +42,7 @@ public class Dialog {
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
 
-		if(result == JOptionPane.CANCEL_OPTION) return null;
+		if(result == JOptionPane.NO_OPTION) return null;
 		
 		if (customer != null) {
 			customer.setAddress(txtAddress.getText());
@@ -99,8 +99,7 @@ public class Dialog {
 	int result =	JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
-
-		if(result == JOptionPane.CANCEL_OPTION) return null;
+		if(result == JOptionPane.NO_OPTION) return null;
 		
 		int row = tableBook.getSelectedRow();
 		String isbn =(String) tableBook.getValueAt(row, 0);
@@ -144,7 +143,7 @@ public class Dialog {
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
 
-		if(result == JOptionPane.CANCEL_OPTION) return null;
+		if(result == JOptionPane.NO_OPTION) return null;
 		
 		if (book != null) {
 			book.setIsbn(txtIsbn.getText());
