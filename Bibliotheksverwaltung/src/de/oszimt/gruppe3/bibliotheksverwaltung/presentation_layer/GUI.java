@@ -38,7 +38,7 @@ public class GUI implements IUserInterface {
 	private JMenu menuCustomer;
 	private JMenu menuBook;
 	private JMenu menuLoan;
-	private JMenuItem menuItemDataStorage;
+	private JMenuItem menuItemDatabase;
 	private JMenuItem menuItemXML;
 	private JSeparator separator;
 	private JMenuItem menuItemExit;
@@ -130,8 +130,12 @@ public class GUI implements IUserInterface {
 		return menuLoan;
 	}
 
-	public JMenuItem getMenuItemDataStorage() {
-		return menuItemDataStorage;
+	public JMenuItem getMenuItemDatabase() {
+		return menuItemDatabase;
+	}
+
+	public JMenuItem getMenuItemXML() {
+		return menuItemXML;
 	}
 
 	public JMenuItem getMenuItemExit() {
@@ -252,10 +256,14 @@ public class GUI implements IUserInterface {
 		menuFile = new JMenu("Datei");
 		menuBar.add(menuFile);
 		
-		menuItemDataStorage = new JMenuItem("Datenhaltung wechseln");
-		menuItemDataStorage.addActionListener(actionListener);
-		menuFile.add(menuItemDataStorage);
-			
+		menuItemDatabase = new JMenuItem("Datenbank Benutzen");
+		menuItemDatabase.addActionListener(actionListener);
+		menuFile.add(menuItemDatabase);
+		
+		menuItemXML = new JMenuItem("XML Benutzen");
+		menuItemXML.addActionListener(actionListener);
+		menuFile.add(menuItemXML);
+		
 		separator = new JSeparator();
 		menuFile.add(separator);
 		

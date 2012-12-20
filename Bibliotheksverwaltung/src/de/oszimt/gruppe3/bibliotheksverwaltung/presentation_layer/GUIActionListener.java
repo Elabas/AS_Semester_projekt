@@ -36,8 +36,10 @@ public class GUIActionListener implements ActionListener {
 				searchBooks();
 		else if(e.getSource().equals(gui.getBtnCustomerSearch()))
 				searchCustomer();
-		else if(e.getSource().equals(gui.getMenuItemDataStorage()))
-				changeDataStorage();
+		else if(e.getSource().equals(gui.getMenuItemXML()))
+				changeToXML();
+		else if(e.getSource().equals(gui.getMenuItemDatabase()))
+				changeToDatabase();
 		else if(e.getSource().equals(gui.getMenuItemExit()))
 				closeAplication();
 		else if(e.getSource().equals(gui.getMenuItemCreateCustomer()))
@@ -75,20 +77,21 @@ public class GUIActionListener implements ActionListener {
 		Loan loan = gui.getSelectedLoan();
 		if(loan != null){
 				if(!logic.deleteLoan(loan))
-					JOptionPane.showMessageDialog(null, "Beim Löschen des Ausleihvorganges ist ein Fehler aufgetreten");
+					new JOptionPane("Beim Löschen des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 				gui.showDataLoan(logic.getLoans());
 		}else
-			JOptionPane.showMessageDialog(null, "Sie haben keinen Ausleihvorgang Ausgewählt");
+			new JOptionPane("Sie haben keinen Ausleihvorgang Ausgewählt",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void createLoan() {
 		Loan loan = Dialog.showLoanDialog(logic);
+		if(loan == null) return;
 		if(logic.isAvailable(loan.getBook(), loan.getStartOfLoan(), loan.getEndOfLoan())){
 				if(!logic.saveLoan(loan))
-					JOptionPane.showMessageDialog(null, "Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten");
+					new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 				gui.showDataLoan(logic.getLoans());
 			}else{
-				JOptionPane.showMessageDialog(null, "Das Buch wird an diesen Tagen schon Ausgeliehen");
+				new JOptionPane("Das Buch wird an diesen Tagen schon Ausgeliehen",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 			}
 	}
 
@@ -109,63 +112,57 @@ public class GUIActionListener implements ActionListener {
 	private void updateLoan() {
 		Loan loan = gui.getSelectedLoan();
 		if(loan != null){
-		loan = Dialog.showLoanDialog(loan, logic);		
+		loan = Dialog.showLoanDialog(loan, logic);
+		if(loan == null) return;
 			if(logic.isAvailable(loan.getBook(), loan.getStartOfLoan(), loan.getEndOfLoan())){
 				if(!logic.updateLoan(loan))
-					JOptionPane.showMessageDialog(null, "Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten");
+					new JOptionPane("Beim Bearbeiten des Ausleihvorganges ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 				gui.showDataLoan(logic.getLoans());
 			}else
-				JOptionPane.showMessageDialog(null, "Das Buch wird an diesen Tagen schon Ausgeliehen");
+				new JOptionPane("Das Buch wird an diesen Tagen schon Ausgeliehen",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 		}else
-			JOptionPane.showMessageDialog(null, "Sie haben keinen Ausleihvorgang Ausgewählt") ;
+			new JOptionPane("Sie haben keinen Ausleihvorgang Ausgewählt",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
+		
 	}
 
 	private void displayLoanForBook() {
 		Book book = gui.getSelectetedBook();
-		if(book != null) {
-			gui.showDataLoan(logic.getLoansByBook(book));
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Sie haben kein Buch Ausgewählt");
-		}
+		gui.showDataLoan(logic.getLoansByBook(book));
 	}
 
 	private void displayLoanForCustomer() {
 		Customer customer = gui.getSelectedCustomer();
-		if(customer != null) {
-			gui.showDataLoan(logic.getLoansByCostumer(customer));
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Sie haben keinen Kunden Ausgewählt");
-		}
-		
+		gui.showDataLoan(logic.getLoansByCostumer(customer));
 	}
 
 	private void deleteBook() {
 		Book book = gui.getSelectetedBook();
 		if(book != null){
 			if(!logic.deleteBook(book))
-				JOptionPane.showMessageDialog(null, "Beim Löschen des Buches ist ein Fehler aufgetreten");
+				new JOptionPane("Beim Löschen des Buches ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 			gui.showDataBooks(logic.getBooks());
 		}else
-			JOptionPane.showMessageDialog(null, "Sie haben kein Buch Ausgewählt!");
+			new JOptionPane("Sie haben kein Buch Ausgewählt!",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void updateBook() {
 		Book book = gui.getSelectetedBook();
-		book = Dialog.showBookDialog(book);
+		
 		if(book != null){
+			book = Dialog.showBookDialog(book);
+			if(book == null) return;
 			if(!logic.updateBook(book))
-				JOptionPane.showMessageDialog(null, "Beim Bearbeiten des Buches ist ein Fehler aufgetreten");
+				new JOptionPane("Beim Bearbeiten des Buches ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 			gui.showDataBooks(logic.getBooks());
 		}else
-			JOptionPane.showMessageDialog(null, "Sie haben kein Buch Ausgewählt!");
+			new JOptionPane("Sie haben kein Buch Ausgewählt!",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void createBook() {
 		Book book = Dialog.showBookDialog();
+		if(book == null) return;
 		if(!logic.saveBook(book))
-			JOptionPane.showMessageDialog(null, "Beim erstellen des Buches ist ein Fehler aufgetreten");
+			new JOptionPane("Beim erstellen des Buches ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 		gui.showDataBooks(logic.getBooks());
 		
 	}
@@ -174,10 +171,10 @@ public class GUIActionListener implements ActionListener {
 		Customer costumer = gui.getSelectedCustomer();
 		if(costumer != null){
 			if(!logic.deleteCustomer(costumer))
-				JOptionPane.showMessageDialog(null, "Beim Löschen des Kunden ist ein Fehler aufgetreten");
+				new JOptionPane("Beim Löschen des Kunden ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 			gui.showDataCustomer(logic.getCustomers());
 		}else{
-			JOptionPane.showMessageDialog(null, "Sie habe keinen Kunden Ausgewählt!");
+			new JOptionPane("Sie habe keinen Kunden Ausgewählt!",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}
@@ -186,18 +183,20 @@ public class GUIActionListener implements ActionListener {
 		Customer customer = gui.getSelectedCustomer();
 		if(customer != null){
 			customer = Dialog.showCustomerDialog(customer);
+			if(customer == null) return;
 			if(!logic.updateCustomer(customer)) 
-				JOptionPane.showMessageDialog(null, "Beim Bearbeiten des Kunden ist ein Fehler aufgetreten");
+				new JOptionPane("Beim Bearbeiten des Kunden ist ein Fehler aufgetreten",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 			gui.showDataCustomer(logic.getCustomers());
 		}
 		else
-			JOptionPane.showMessageDialog(null, "Sie habe keinen Kunden Ausgewählt!");
+			new JOptionPane("Sie habe keinen Kunden Ausgewählt!",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void createCustomer() {
 		Customer customer  = Dialog.showCustomerDialog();
+		if(customer == null) return;
 		if(!logic.saveCustomer(customer))
-			JOptionPane.showMessageDialog(null, "Beim erstellen des Kunden ist ein Fehler aufgetreten");
+			new JOptionPane("Beim erstellen des Kunden ist ein Fehler aufgetreten", JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);
 		gui.showDataCustomer(logic.getCustomers());
 	}
 
@@ -207,9 +206,18 @@ public class GUIActionListener implements ActionListener {
 		System.exit(0);
 	}
 
-	private void changeDataStorage() {
+	private void changeToDatabase() {
 		if(!logic.changePersistence()){
-			JOptionPane.showMessageDialog(null, "Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten.");
+			new JOptionPane("Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten.", JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
+			return;
+		}else{
+			gui.refreshTableToDefault();
+		}
+	}
+
+	private void changeToXML() {
+		if(!logic.changePersistence()){
+			new JOptionPane("Beim Wechseln der Datenhaltung ist ein Fehler Aufgetreten.", JOptionPane.ERROR_MESSAGE, JOptionPane.OK_OPTION);
 			return;
 		}else{
 			gui.refreshTableToDefault();

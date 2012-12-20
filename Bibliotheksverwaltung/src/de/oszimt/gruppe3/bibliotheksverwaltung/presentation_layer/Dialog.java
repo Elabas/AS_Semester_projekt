@@ -38,10 +38,12 @@ public class Dialog {
 			txtAddress.setText(customer.getAddress());
 		}
 
-		JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
+		int result = JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
 
+		if(result == JOptionPane.CANCEL_OPTION) return null;
+		
 		if (customer != null) {
 			customer.setAddress(txtAddress.getText());
 			customer.setName(txtName.getText());
@@ -94,10 +96,12 @@ public class Dialog {
 			txtStartOfLoan.setText(loan.getStartOfLoan());
 			txtEndOfLoan.setText(loan.getEndOfLoan());
 		}
-		JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
+	int result =	JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
 
+		if(result == JOptionPane.CANCEL_OPTION) return null;
+		
 		int row = tableBook.getSelectedRow();
 		String isbn =(String) tableBook.getValueAt(row, 0);
 		Book book = logic.readBook(isbn);
@@ -136,10 +140,12 @@ public class Dialog {
 			txtPrize.setText(book.getPrice()+"");
 		}
 
-		JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
+		int result = JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
 
+		if(result == JOptionPane.CANCEL_OPTION) return null;
+		
 		if (book != null) {
 			book.setIsbn(txtIsbn.getText());
 			book.setAuthor(txtAuthor.getText());
