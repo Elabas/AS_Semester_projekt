@@ -3,6 +3,8 @@ package de.oszimt.gruppe3.bibliotheksverwaltung.presentation_layer;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,7 +29,7 @@ import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Customer;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Loan;
 
-public class GUI implements IUserInterface {
+public class GUI implements IUserInterface, WindowListener {
 
 	private JFrame frame;
 	private JTextField txtFieldSearch;
@@ -38,8 +40,7 @@ public class GUI implements IUserInterface {
 	private JMenu menuCustomer;
 	private JMenu menuBook;
 	private JMenu menuLoan;
-	private JMenuItem menuItemDatabase;
-	private JMenuItem menuItemXML;
+	private JMenuItem menuItemDataStorage;
 	private JSeparator separator;
 	private JMenuItem menuItemExit;
 	private JMenuItem menuItemCreateCustomer;
@@ -130,12 +131,8 @@ public class GUI implements IUserInterface {
 		return menuLoan;
 	}
 
-	public JMenuItem getMenuItemDatabase() {
-		return menuItemDatabase;
-	}
-
-	public JMenuItem getMenuItemXML() {
-		return menuItemXML;
+	public JMenuItem getMenuItemDataStorage() {
+		return menuItemDataStorage;
 	}
 
 	public JMenuItem getMenuItemExit() {
@@ -246,7 +243,8 @@ public class GUI implements IUserInterface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame() ;
+		frame.addWindowListener(this) ;
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -256,13 +254,9 @@ public class GUI implements IUserInterface {
 		menuFile = new JMenu("Datei");
 		menuBar.add(menuFile);
 		
-		menuItemDatabase = new JMenuItem("Datenbank Benutzen");
-		menuItemDatabase.addActionListener(actionListener);
-		menuFile.add(menuItemDatabase);
-		
-		menuItemXML = new JMenuItem("XML Benutzen");
-		menuItemXML.addActionListener(actionListener);
-		menuFile.add(menuItemXML);
+		menuItemDataStorage = new JMenuItem("Datenhaltung wechseln");
+		menuItemDataStorage.addActionListener(actionListener);
+		menuFile.add(menuItemDataStorage);
 		
 		separator = new JSeparator();
 		menuFile.add(separator);
@@ -445,6 +439,48 @@ public class GUI implements IUserInterface {
 		int loanId = (Integer) mainTable.getValueAt(row, 0);
 		Loan loan = logic.readLoan(loanId);
 		return loan;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+    	logic.finish() ;
+        System.exit( 0 );          		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

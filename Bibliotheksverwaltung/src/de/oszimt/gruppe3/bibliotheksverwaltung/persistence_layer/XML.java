@@ -442,7 +442,7 @@ public class XML implements IDataStorage {
 				return false;
 			}
 			
-			if(startNew.after(startOld) && startNew.before(endOld))	return false;
+			if(startNew.after(startOld) && startNew.before(endOld))	return false;	
 			if(startNew.before(startOld) && endNew.after(endOld) )	return false;
 			if(startNew.after(startOld) && endNew.before(endOld))	return false;
 			if(endNew.after(startOld) && endNew.before(endOld))	return false;

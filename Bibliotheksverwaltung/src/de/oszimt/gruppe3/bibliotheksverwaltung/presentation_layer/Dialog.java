@@ -26,7 +26,7 @@ public class Dialog {
 		JTextField txtName = new JTextField(18);
 		JLabel lbName = new JLabel("Vorname: ");
 		JTextField txtSurename = new JTextField(18);
-		JLabel lbSurename = new JLabel("Nochname: ");
+		JLabel lbSurename = new JLabel("Nachname: ");
 		JTextField txtAddress = new JTextField(18);
 		JLabel lbAddress = new JLabel("Adresse: ");
 		JComponent[] inputs = new JComponent[] { lbName, txtName, lbSurename,
@@ -96,18 +96,30 @@ public class Dialog {
 			txtStartOfLoan.setText(loan.getStartOfLoan());
 			txtEndOfLoan.setText(loan.getEndOfLoan());
 		}
-	int result =	JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
+		int rowCustomer = 0;
+		int rowBook = 0 ;
+		do {
+			int result =	JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
 				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				new String[] { "Speichern", "Abbrechen" }, "Speichern");
-		if(result == JOptionPane.NO_OPTION) return null;
-		
-		int row = tableBook.getSelectedRow();
-		String isbn =(String) tableBook.getValueAt(row, 0);
+			if(result == JOptionPane.NO_OPTION) return null;
+			rowCustomer = tableCustomer.getSelectedRow();
+			rowBook = tableBook.getSelectedRow();
+			if (rowCustomer < 0 && rowBook < 0) {
+				JOptionPane.showMessageDialog(null, "Kein Kunde und kein Buch ausgewählt") ;
+			}
+			else if(rowCustomer < 0 ) {
+				JOptionPane.showMessageDialog(null, "Kein Kunde ausgewählt") ;
+			}
+			else if(rowBook < 0 ) {
+				JOptionPane.showMessageDialog(null, "Kein Buch ausgewählt") ;
+			}
+		} while (rowBook < 0 || rowCustomer < 0) ;
+		String isbn =(String) tableBook.getValueAt(rowBook, 0);		
 		Book book = logic.readBook(isbn);
 		
-		row = tableCustomer.getSelectedRow();
-		System.out.println(row);
-		int customerID = Integer.parseInt(tableCustomer.getValueAt(row, 0).toString());
+		
+		int customerID = Integer.parseInt(tableCustomer.getValueAt(rowCustomer, 0).toString());
 		Customer customer =  logic.readCustomer(customerID);
 		
 		if(loan != null){
