@@ -5,8 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -21,8 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
-
-import org.jdom2.JDOMException;
 
 import de.oszimt.gruppe3.bibliotheksverwaltung.business_layer.IBusinessLogic;
 import de.oszimt.gruppe3.bibliotheksverwaltung.model.Book;
@@ -63,18 +59,6 @@ public class GUI implements IUserInterface, WindowListener {
 	private JSeparator separator_5;
 	private IBusinessLogic logic;
 	private GUIActionListener actionListener;
-
-	/**
-	 * Launch the application.
-	 * 
-	 * @throws IOException
-	 * @throws JDOMException
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
-	// public static void main(String[] args) {
-	// new GUI();
-	// }
 
 	{
 		try {
