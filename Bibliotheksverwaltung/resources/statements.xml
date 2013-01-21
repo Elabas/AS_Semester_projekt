@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>	
 <statements>
-	<statement id="createBook">INSERT INTO T_Books VALUES" + "(?,?,?,?)</statement>
+	<statement id="createBook">INSERT INTO T_Books VALUES(?,?,?,?)</statement>
 	<statement id="createCustomer">INSERT INTO T_Customers(name,surname,address) VALUES(?,?,?)</statement>
 	<statement id="createLoan">INSERT INTO T_Loans(f_isbn,f_customer_id,startOfLoan,endOfLoan) VALUES(?,?,?,?)</statement>
 	<statement id="deleteBook">DELETE FROM T_Books WHERE p_isbn = ?</statement>

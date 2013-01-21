@@ -2,22 +2,16 @@
 <data>
   <customers>
     <customer>
-      <customerID>1</customerID>
-      <name>Horst</name>
-      <surename>Müller</surename>
-      <address>Prenzlauer Straße 12</address>
-    </customer>
-    <customer>
       <customerID>2</customerID>
       <name>Tim</name>
       <surename>Melzer</surename>
-      <address>See Straße 31</address>
+      <address>Seestraße 3, 10443 Berlin</address>
     </customer>
     <customer>
       <customerID>3</customerID>
       <name>Max</name>
       <surename>Menzel</surename>
-      <address>Perleberger Straße 2</address>
+      <address>Perleberger Straße 54, 10559 Berlin</address>
     </customer>
   </customers>
   <books>

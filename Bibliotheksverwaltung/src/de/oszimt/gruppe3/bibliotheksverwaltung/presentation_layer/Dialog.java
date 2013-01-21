@@ -38,12 +38,14 @@ public class Dialog {
 			txtAddress.setText(customer.getAddress());
 		}
 
-		int result = JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-				new String[] { "Speichern", "Abbrechen" }, "Speichern");
+		int result = JOptionPane.showOptionDialog(null, inputs,
+				"Benutzer Anlegen", JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, new String[] { "Speichern",
+						"Abbrechen" }, "Speichern");
 
-		if(result == JOptionPane.NO_OPTION) return null;
-		
+		if (result == JOptionPane.NO_OPTION)
+			return null;
+
 		if (customer != null) {
 			customer.setAddress(txtAddress.getText());
 			customer.setName(txtName.getText());
@@ -62,12 +64,12 @@ public class Dialog {
 	public static Book showBookDialog() {
 		return showBookDialog(null);
 	}
-	
-	public static Loan showLoanDialog(IBusinessLogic logic){
-		return showLoanDialog(null,logic);
+
+	public static Loan showLoanDialog(IBusinessLogic logic) {
+		return showLoanDialog(null, logic);
 	}
 
-	public static Loan showLoanDialog(Loan loan,IBusinessLogic logic) {
+	public static Loan showLoanDialog(Loan loan, IBusinessLogic logic) {
 		JLabel lbBook = new JLabel("Bitte Buch Auswählen");
 		JTable tableBook = new JTable();
 		JLabel lbCustomer = new JLabel("Bitte Kunde Auswählen");
@@ -76,61 +78,70 @@ public class Dialog {
 		JTextField txtStartOfLoan = new JTextField();
 		JLabel lbEndOfLoan = new JLabel("Ausleihenddatum: ");
 		JTextField txtEndOfLoan = new JTextField();
-		
+
 		DefaultTableModel dftm = (DefaultTableModel) tableBook.getModel();
-		dftm.setColumnIdentifiers(new String[]{"ISBN","Titel","Autor","Preis"});
+		dftm.setColumnIdentifiers(new String[] { "ISBN", "Titel", "Autor",
+				"Preis" });
 		List<Book> books = logic.getBooks();
 		for (Book book : books) {
-			dftm.addRow(new Object[]{book.getIsbn(),book.getTitle(),book.getAuthor(),book.getPrice()});
+			dftm.addRow(new Object[] { book.getIsbn(), book.getTitle(),
+					book.getAuthor(), book.getPrice() });
 		}
-		
+
 		DefaultTableModel dftmc = (DefaultTableModel) tableCustomer.getModel();
-		dftmc.setColumnIdentifiers(new String[]{"Kunden Nr.","Vorname","Nachname","Adrese","Ausleihvorgänge"});
+		dftmc.setColumnIdentifiers(new String[] { "Kunden Nr.", "Vorname",
+				"Nachname", "Adrese", "Ausleihvorgänge" });
 		List<Customer> customers = logic.getCustomers();
 		for (Customer customer : customers) {
-			dftmc.addRow(new Object[]{customer.getCustomerID(),customer.getName(),customer.getSurname(),customer.getAddress(),customer.getLoanList().size()});
+			dftmc.addRow(new Object[] { customer.getCustomerID(),
+					customer.getName(), customer.getSurname(),
+					customer.getAddress(), customer.getLoanList().size() });
 		}
-		
-		JComponent[] inputs = new JComponent[] { lbBook, tableBook, lbCustomer, tableCustomer, lbStartOfLoan, txtStartOfLoan, lbEndOfLoan, txtEndOfLoan };
-		if(loan != null){
+
+		JComponent[] inputs = new JComponent[] { lbBook, tableBook, lbCustomer,
+				tableCustomer, lbStartOfLoan, txtStartOfLoan, lbEndOfLoan,
+				txtEndOfLoan };
+		if (loan != null) {
 			txtStartOfLoan.setText(loan.getStartOfLoan());
 			txtEndOfLoan.setText(loan.getEndOfLoan());
 		}
 		int rowCustomer = 0;
-		int rowBook = 0 ;
+		int rowBook = 0;
 		do {
-			int result =	JOptionPane.showOptionDialog(null, inputs, "Ausleihvorgang Anlegen",
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-				new String[] { "Speichern", "Abbrechen" }, "Speichern");
-			if(result == JOptionPane.NO_OPTION) return null;
+			int result = JOptionPane.showOptionDialog(null, inputs,
+					"Ausleihvorgang Anlegen", JOptionPane.YES_NO_OPTION,
+					JOptionPane.PLAIN_MESSAGE, null, new String[] {
+							"Speichern", "Abbrechen" }, "Speichern");
+			if (result == JOptionPane.NO_OPTION)
+				return null;
 			rowCustomer = tableCustomer.getSelectedRow();
 			rowBook = tableBook.getSelectedRow();
 			if (rowCustomer < 0 && rowBook < 0) {
-				JOptionPane.showMessageDialog(null, "Kein Kunde und kein Buch ausgewählt") ;
+				JOptionPane.showMessageDialog(null,
+						"Kein Kunde und kein Buch ausgewählt");
+			} else if (rowCustomer < 0) {
+				JOptionPane.showMessageDialog(null, "Kein Kunde ausgewählt");
+			} else if (rowBook < 0) {
+				JOptionPane.showMessageDialog(null, "Kein Buch ausgewählt");
 			}
-			else if(rowCustomer < 0 ) {
-				JOptionPane.showMessageDialog(null, "Kein Kunde ausgewählt") ;
-			}
-			else if(rowBook < 0 ) {
-				JOptionPane.showMessageDialog(null, "Kein Buch ausgewählt") ;
-			}
-		} while (rowBook < 0 || rowCustomer < 0) ;
-		String isbn =(String) tableBook.getValueAt(rowBook, 0);		
+		} while (rowBook < 0 || rowCustomer < 0);
+		String isbn = (String) tableBook.getValueAt(rowBook, 0);
 		Book book = logic.readBook(isbn);
-		
-		
-		int customerID = Integer.parseInt(tableCustomer.getValueAt(rowCustomer, 0).toString());
-		Customer customer =  logic.readCustomer(customerID);
-		
-		if(loan != null){
+
+		int customerID = Integer.parseInt(tableCustomer.getValueAt(rowCustomer,
+				0).toString());
+		Customer customer = logic.readCustomer(customerID);
+
+		if (loan != null) {
 			loan.setBook(book);
 			loan.setCostumer(customer);
 			loan.setStartOfLoan(txtStartOfLoan.getText());
 			loan.setEndOfLoan(txtEndOfLoan.getText());
 			return loan;
 		}
-		
-		return new Loan(book, customer, txtStartOfLoan.getText(), txtEndOfLoan.getText());
+
+		return new Loan(book, customer, txtStartOfLoan.getText(),
+				txtEndOfLoan.getText());
 	}
 
 	public static Book showBookDialog(Book book) {
@@ -141,22 +152,25 @@ public class Dialog {
 		JTextField txtAuthor = new JTextField(18);
 		JLabel lbAuthor = new JLabel("Author: ");
 		JTextField txtPrize = new JTextField(18);
-		JLabel lbPrize = new JLabel("Preis: ");
-		JComponent[] inputs = new JComponent[] { lbIsbn,txtIsbn,lbTitle,txtTitle,lbAuthor,txtAuthor,lbPrize,txtPrize};
+		JLabel lbPrize = new JLabel("Preis (engl. Format): ");
+		JComponent[] inputs = new JComponent[] { lbIsbn, txtIsbn, lbTitle,
+				txtTitle, lbAuthor, txtAuthor, lbPrize, txtPrize };
 
 		if (book != null) {
 			txtIsbn.setText(book.getIsbn());
 			txtTitle.setText(book.getTitle());
 			txtAuthor.setText(book.getAuthor());
-			txtPrize.setText(book.getPrice()+"");
+			txtPrize.setText(book.getPrice() + "");
 		}
 
-		int result = JOptionPane.showOptionDialog(null, inputs, "Benutzer Anlegen",
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-				new String[] { "Speichern", "Abbrechen" }, "Speichern");
+		int result = JOptionPane.showOptionDialog(null, inputs,
+				"Benutzer Anlegen", JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, new String[] { "Speichern",
+						"Abbrechen" }, "Speichern");
 
-		if(result == JOptionPane.NO_OPTION) return null;
-		
+		if (result == JOptionPane.NO_OPTION)
+			return null;
+
 		if (book != null) {
 			book.setIsbn(txtIsbn.getText());
 			book.setAuthor(txtAuthor.getText());
@@ -165,7 +179,8 @@ public class Dialog {
 			return book;
 		}
 
-		return new Book(txtIsbn.getText(), txtTitle.getText(), txtAuthor.getText(), Double.parseDouble(txtPrize.getText()));
+		return new Book(txtIsbn.getText(), txtTitle.getText(),
+				txtAuthor.getText(), Double.parseDouble(txtPrize.getText()));
 	}
 
 }
